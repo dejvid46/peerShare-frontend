@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+      "jsx": "react",
+      "plugins": [
+        {
+          "name": "@astrojs/ts-plugin"
+        },
+      ],
+  },
+  "extends": "astro/tsconfigs/strict"
+}
