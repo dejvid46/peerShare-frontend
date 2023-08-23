@@ -7,7 +7,7 @@ const { title } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark bg-gradient-to-bl from-zinc-900 via-slate-900 to-stone-900" style="color-scheme: dark;">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content="Astro description">
@@ -16,24 +16,38 @@ const { title } = Astro.props;
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
-	<body>
+	<body class="relative container mx-auto max-w-7xl z-10 px-6 min-h-[100vh] flex-grow">
 		<slot />
+		<div id="outerContainer">
+			<div id="container">
+				<div class="circle" style="animation-delay: -12s"></div>
+<div class="circle" style="animation-delay: -8s"></div>
+<div class="circle" style="animation-delay: -4s"></div>
+<div class="circle" style="animation-delay: 0s"></div>
+			</div>
+		  </div>
 	</body>
 </html>
-<style is:global>
-	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(45deg, rgb(var(--accent)), rgb(var(--accent-light)) 30%, white 60%);
-	}
-	html {
-		font-family: system-ui, sans-serif;
-		background: #13151A;
-		background-size: 224px;
-	}
-	code {
-		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-			Bitstream Vera Sans Mono, Courier New, monospace;
-	}
+
+<style>
+	.circle {
+  border-radius: 50%;
+  background-color: deepskyblue;
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  opacity: 0;
+  animation: scaleIn 16s infinite cubic-bezier(.36, .11, .89, .32);
+}
+	@keyframes scaleIn {
+  from {
+    transform: scale(0, 0);
+    opacity: .5;
+  }
+  to {
+    transform: scale(2.5, 2.5);
+    opacity: 0;
+  }
+}
 </style>
+
