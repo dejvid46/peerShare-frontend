@@ -1,0 +1,45 @@
+--- 
+interface Props {
+	size: string;
+}
+
+const { size } = Astro.props;
+---
+
+<div class="flex h-screen">
+    <div class="m-auto z-1">
+        <div>
+            <div class="circle" style="animation-delay: -15s"></div>
+            <div class="circle" style="animation-delay: -10s"></div>
+            <div class="circle" style="animation-delay: -5s"></div>
+            <div class="circle" style="animation-delay: 0s"></div>
+        </div>
+    </div>
+</div>
+
+<style define:vars={{ size }}>
+	.circle {
+		border-radius: 50%;
+		width: var(--size);
+		height: var(--size);
+		position: absolute;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+		opacity: 0;
+		animation: scaleIn 20s infinite cubic-bezier(.36, .11, .89, .32);
+		background: radial-gradient(closest-side, rgba(0, 0, 0, 0), blue);
+        z-index: -1;
+	}
+	@keyframes scaleIn {
+		from {
+			transform: scale(0, 0);
+			opacity: .5;
+		}
+		to {
+			transform: scale(2.5, 2.5);
+			opacity: 0;
+		}
+	}
+</style>
+
