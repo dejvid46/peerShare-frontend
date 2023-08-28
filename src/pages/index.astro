@@ -4,10 +4,13 @@ import Card from '../components/Card.astro';
 import MyButton from '../react/MyButton'
 import MyAvatar from '../react/MyAvatar'
 import {Checkbox} from "@nextui-org/react";
-import Radar from "../components/Radar.astro"
-const n = [1,2,3,4,5,6];
+import Radar from "../components/Radar.astro";
+import Title from '../components/Title.astro';
 ---
 
+
 <Layout title="Welcome to Astro.">
-	Harooo
+	<main class="flex flex-col items-center h-100vh">
+		<Title/>
+	</main>
 </Layout>

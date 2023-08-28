@@ -8,7 +8,7 @@ const { title } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="en" class="dark bg-gradient-to-bl from-zinc-900 via-slate-900 to-stone-900" style="color-scheme: dark;">
+<html lang="en" class="dark bg-gradient-to-bl from-zinc-900 via-slate-900 to-stone-900 overflow-hidden" style="color-scheme: dark;">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content="Astro description">
@@ -17,9 +17,9 @@ const { title } = Astro.props;
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
-	<body class="relative container mx-auto max-w-7xl z-10 px-6 min-h-[100vh] flex-grow">
-		<slot />
+	<body class="relative container mx-auto max-w-7xl z-10 px-6 min-h-[calc(100vh)] flex-grow">
 		<Radar size='250px' />
+		<slot />
 	</body>
 </html>
 
