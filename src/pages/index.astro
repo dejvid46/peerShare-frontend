@@ -10,7 +10,7 @@ import Radar from '../components/Radar.astro';
 	<main class="flex flex-col items-center justify-between h-full">
 		<Title/>
 		<Radar size='250px' />
-		<div class="fixed bottom-0 my-8 sm:invisible"><BottomSendMess client:visible/></div>
+		<BottomSendMess client:visible/>
 	</main>
 	
 </Layout>

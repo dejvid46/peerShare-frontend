@@ -1,10 +1,13 @@
 ---
 import { Input } from "@nextui-org/react";
 import RoomInput from "../react/RoomInput";
+import Icon from "astro-icon";
+
 ---
 
 <div class="flex flex-col items-center">
     <h1 class="sm:text-6xl text-5xl font-bold my-6">PeerShare</h1>
-    
-    <RoomInput client:visible/>
+    <RoomInput client:visible>
+        <Icon name="share" class="stroke-foreground stroke-2 w-12 h-12" />
+    </RoomInput>
 </div>
