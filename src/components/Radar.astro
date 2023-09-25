@@ -8,12 +8,14 @@ interface Props {
 const { size } = Astro.props;
 ---
 
-<div class="flex z-[-1] fixed w-full h-full left-0 top-0">
+<div class="flex fixed w-full h-full left-0 top-0">
     <div class="m-auto sm:w-1/2 sm:pb-[50%] w-full pb-[100%] relative">
-		<div class="circle" style="animation-delay: -15s"></div>
-		<div class="circle" style="animation-delay: -10s"></div>
-		<div class="circle" style="animation-delay: -5s"></div>
-		<div class="circle" style="animation-delay: 0s"></div>
+		<div class="z-[-1]">
+			<div class="circle" style="animation-delay: -15s"></div>
+			<div class="circle" style="animation-delay: -10s"></div>
+			<div class="circle" style="animation-delay: -5s"></div>
+			<div class="circle" style="animation-delay: 0s"></div>
+		</div>
 		<AvatarsCircle />
     </div>
 </div>
