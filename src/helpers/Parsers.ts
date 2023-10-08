@@ -28,7 +28,6 @@ export function room(x: string): Result<Room, Err> {
 
 export function members(x: string): Result<Members, Err> {
   if(!x.startsWith("/members ")) return err({message: "Must start with '/members '"});
-  console.log(x)
   return ok({ids: x.slice(9).replace("[", "").replace("]", "").split(", ")});
 }
 

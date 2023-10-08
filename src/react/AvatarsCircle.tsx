@@ -10,9 +10,7 @@ export default function AvatarCircle() {
   if (!membersLastMess || !idLastMess) {
     return <></>;
   }
-  const noYou = membersLastMess.ids.filter((x) => x !== idLastMess);
-
-  console.log(idLastMess, membersLastMess);
+  const noYou = membersLastMess.ids.filter((x) => x !== idLastMess).sort();
 
   return (
     <div>
