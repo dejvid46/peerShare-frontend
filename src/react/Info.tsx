@@ -11,7 +11,7 @@ interface InfoPrpos {
 export default function Info({ text, buttonText, progres }: InfoPrpos) {
   return (
     <Card>
-      <CardBody className="flex flex-col p-4 bg-default-100">
+      <CardBody className="flex flex-col p-3 bg-default-100">
         <div className="grow w-full flex">
           <div className="grow flex sm:flex-col items-center sm:items-start sm:gap-2 justify-between">
             <div>{text}</div>

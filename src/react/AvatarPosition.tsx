@@ -34,7 +34,7 @@ export default function AvatarPosition({ id, order, count }: AvatarProps) {
   const hash = Number.parseInt(id.slice(-3)) % 24;
 
   if (order === 1) {
-    return <Avatar icon={hash} rotate={0} translateX={0} />;
+    return <Avatar icon={hash} rotate={0} translateX={0} id={id} />;
   }
 
   const step = window(steps, (a, b) => a <= order - 1 && order - 1 <= b);
@@ -54,5 +54,5 @@ export default function AvatarPosition({ id, order, count }: AvatarProps) {
   const rotate = (360 / circleSize) * positionInCircle + 270;
   const translateX = step * 200;
 
-  return <Avatar icon={hash} rotate={rotate} translateX={translateX} />;
+  return <Avatar icon={hash} rotate={rotate} translateX={translateX} id={id} />;
 }

@@ -1,34 +1,58 @@
-import React, { useState } from "react";
-import { Avatar as AvatarNextUi, AvatarIcon } from "@nextui-org/react";
+import React, { useEffect, useMemo, useState } from "react";
+import {
+  Avatar as AvatarNextUi,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@nextui-org/react";
+import useWebSocket from "../helpers/UseWebSocket";
+import { message } from "../helpers/Parsers";
+import AvatarIcon from "./AvatarIcon";
 
 interface AvatarProps {
+  id: string;
   icon: number;
   translateX: number;
   rotate: number;
 }
 
-export default function Avatar({ icon, rotate, translateX }: AvatarProps) {
-  const [load, setLoad] = useState(".");
-  const svg = import(`../icons/${icon}.svg`);
-  svg.then((x) => setLoad(x.default));
+export default function Avatar({ icon, rotate, translateX, id }: AvatarProps) {
+  const [isOpen, setIsOpen] = React.useState<undefined | string>(undefined);
+
+  const { lastMess } = useWebSocket(message(id));
+
+  useEffect(() => {
+    setIsOpen(lastMess);
+    if (lastMess) {
+      setTimeout(() => {
+        setIsOpen(undefined);
+      }, 2000);
+    }
+  }, [lastMess]);
 
   return (
-    <div
-      style={{ transform: `rotate(${rotate}deg) translateX(${translateX}%)` }}
-      className="absolute sm:h-16 sm:w-16 sm:left-[calc(50%_-_32px)] sm:top-[calc(50%_-_32px)] h-12 w-12 left-[calc(50%_-_24px)] top-[calc(50%_-_24px)] rounded-[50%]"
+    <Popover
+      placement="bottom"
+      showArrow={true}
+      isOpen={typeof isOpen !== "undefined"}
     >
-      <div className="transition-transform transform-gpu hover:scale-125 w-full h-full">
-        <AvatarNextUi
-          isBordered
-          src={load}
-          style={{ transform: `rotate(-${rotate}deg)` }}
-          classNames={{
-            base: "bg-gradient-to-br from-zinc-900 via-slate-900 to-stone-900 w-full h-full p-2",
-            icon: "stroke-black/80",
-          }}
-          alt="Your SVG"
-        />
+      <div
+        style={{
+          transform: `rotate(${rotate}deg) translateX(${translateX}%)`,
+        }}
+        className="absolute sm:h-16 sm:w-16 sm:left-[calc(50%_-_32px)] sm:top-[calc(50%_-_32px)] h-12 w-12 left-[calc(50%_-_24px)] top-[calc(50%_-_24px)] rounded-[50%]"
+      >
+        <PopoverTrigger>
+          <div className="transition-transform transform-gpu hover:scale-125 w-full h-full">
+            <AvatarIcon path={icon} rotate={rotate} />
+          </div>
+        </PopoverTrigger>
       </div>
-    </div>
+      <PopoverContent>
+        <div className="px-1 py-2">
+          <div className="text-tiny">{isOpen}</div>
+        </div>
+      </PopoverContent>
+    </Popover>
   );
 }

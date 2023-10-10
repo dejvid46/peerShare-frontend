@@ -28,6 +28,7 @@ export function room(x: string): Result<Room, Err> {
 
 export function members(x: string): Result<Members, Err> {
   if(!x.startsWith("/members ")) return err({message: "Must start with '/members '"});
+  console.log(x);
   return ok({ids: x.slice(9).replace("[", "").replace("]", "").split(", ")});
 }
 
@@ -37,4 +38,17 @@ export function id(x: string): Result<string, Err> {
   const id = body[1];
   if(!id) return err({message: "Id must be number"});
   return ok(id);
+}
+
+export function message(y: string): (x: string) => Result<string, Err> {
+  return (x) => {
+    if(!x.startsWith("/message "))  return err({message: "Must start with '/message '"});
+    const body = x.split(" ");
+    const id = body[1];
+    const mess = body.slice(2).join(" ");
+    if(!id || !mess) return err({message: "Id and message must be included"});
+    if(id !== y) return err({message: "Id is not same"});
+
+    return ok(mess);
+  }
 }
