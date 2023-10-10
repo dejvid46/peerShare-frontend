@@ -16,25 +16,11 @@ function window<T>(arr: Array<T>, f: (a: T, b: T) => boolean) {
   return undefined;
 }
 
-function hashCode(str: string) {
-  var hash = 0,
-    i,
-    chr;
-  if (str.length === 0) return hash;
-  for (i = 0; i < str.length; i++) {
-    chr = str.charCodeAt(i);
-    hash = (hash << 5) - hash + chr;
-    hash |= 0;
-  }
-  return hash;
-}
-
 export default function AvatarPosition({ id, order, count }: AvatarProps) {
   const steps = [0, 10, 32];
-  const hash = Number.parseInt(id.slice(-3)) % 24;
 
   if (order === 1) {
-    return <Avatar icon={hash} rotate={0} translateX={0} id={id} />;
+    return <Avatar id={id} rotate={0} translateX={0} />;
   }
 
   const step = window(steps, (a, b) => a <= order - 1 && order - 1 <= b);
@@ -54,5 +40,5 @@ export default function AvatarPosition({ id, order, count }: AvatarProps) {
   const rotate = (360 / circleSize) * positionInCircle + 270;
   const translateX = step * 200;
 
-  return <Avatar icon={hash} rotate={rotate} translateX={translateX} id={id} />;
+  return <Avatar rotate={rotate} translateX={translateX} id={id} />;
 }

@@ -11,12 +11,11 @@ import AvatarIcon from "./AvatarIcon";
 
 interface AvatarProps {
   id: string;
-  icon: number;
   translateX: number;
   rotate: number;
 }
 
-export default function Avatar({ icon, rotate, translateX, id }: AvatarProps) {
+export default function Avatar({ rotate, translateX, id }: AvatarProps) {
   const [isOpen, setIsOpen] = React.useState<undefined | string>(undefined);
 
   const { lastMess } = useWebSocket(message(id));
@@ -44,7 +43,7 @@ export default function Avatar({ icon, rotate, translateX, id }: AvatarProps) {
       >
         <PopoverTrigger>
           <div className="transition-transform transform-gpu hover:scale-125 w-full h-full">
-            <AvatarIcon path={icon} rotate={rotate} />
+            <AvatarIcon id={id} rotate={rotate} />
           </div>
         </PopoverTrigger>
       </div>

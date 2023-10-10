@@ -1,23 +1,34 @@
-import { Button, Card, CardBody, Progress } from "@nextui-org/react";
-import React, { useState } from "react";
+import { Button, Card, CardBody } from "@nextui-org/react";
+import React from "react";
 import xSvg from "../icons/x.svg";
+import AvatarIcon from "./AvatarIcon";
 
 interface InfoPrpos {
-  text: string;
-  buttonText: string;
-  progres?: number;
+  id: string;
+  invited: boolean;
+  setInvite: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function Info({ text, buttonText, progres }: InfoPrpos) {
+export default function Info({ id, invited, setInvite }: InfoPrpos) {
   return (
     <Card>
       <CardBody className="flex flex-col p-3 bg-default-100">
         <div className="grow w-full flex">
           <div className="grow flex sm:flex-col items-center sm:items-start sm:gap-2 justify-between">
-            <div>{text}</div>
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8">
+                <AvatarIcon id={id} p={true} />
+              </div>
+              <div>wants to join</div>
+            </div>
             <div className="flex gap-2 sm:px-0 px-2">
-              <Button size="sm" color="success" variant="bordered">
-                {buttonText}
+              <Button
+                size="sm"
+                color="success"
+                variant="bordered"
+                onClick={() => setInvite(true)}
+              >
+                Invite
               </Button>
             </div>
           </div>
@@ -39,11 +50,11 @@ export default function Info({ text, buttonText, progres }: InfoPrpos) {
             </Button>
           </div>
         </div>
-        {progres && (
+        {/* {progres && (
           <div className="w-full mt-2 sm:mt-3">
             <Progress size="sm" aria-label="Loading..." value={progres} />
           </div>
-        )}
+        )} */}
       </CardBody>
     </Card>
   );

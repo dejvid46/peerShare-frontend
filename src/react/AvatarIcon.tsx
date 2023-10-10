@@ -9,15 +9,17 @@ import useWebSocket from "../helpers/UseWebSocket";
 import { message } from "../helpers/Parsers";
 
 interface AvatarProps {
-  path: number;
-  rotate: number;
+  id: string;
+  rotate?: number;
+  p?: boolean;
 }
 
-export default function AvatarIcon({ path, rotate }: AvatarProps) {
+export default function AvatarIcon({ id, rotate, p }: AvatarProps) {
   const [load, setLoad] = useState(".");
+  const hash = Number.parseInt(id.slice(-3)) % 24;
 
   useEffect(() => {
-    const svg = import(`../icons/${path}.svg`);
+    const svg = import(`../icons/${hash}.svg`);
     svg.then((x) => setLoad(x.default));
   }, []);
 
@@ -25,9 +27,11 @@ export default function AvatarIcon({ path, rotate }: AvatarProps) {
     <AvatarNextUi
       isBordered
       src={load}
-      style={{ transform: `rotate(-${rotate}deg)` }}
+      style={{ transform: `rotate(-${rotate || 0}deg)` }}
       classNames={{
-        base: "bg-gradient-to-br from-zinc-900 via-slate-900 to-stone-900 w-full h-full p-2",
+        base: p
+          ? "bg-gradient-to-br from-zinc-900 via-slate-900 to-stone-900 w-full h-full p-[2px]"
+          : "bg-gradient-to-br from-zinc-900 via-slate-900 to-stone-900 w-full h-full p-2",
         icon: "stroke-black/80",
       }}
       alt="Your SVG"

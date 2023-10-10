@@ -1,6 +1,6 @@
 import { Button, Input } from "@nextui-org/react";
 import React, { useState } from "react";
-import Info from "./Info";
+import Info from "./NewMember";
 import useWebSocket from "../helpers/UseWebSocket";
 
 export default function SendMess() {
@@ -9,17 +9,22 @@ export default function SendMess() {
 
   const handleKeyDown = (event: any) => {
     if (event.key === "Enter") {
+      send();
+    }
+  };
+
+  const send = () => {
+    if (mess) {
       sendMess(mess);
       setMess("");
     }
   };
 
+  const [invited, setInvite] = useState<boolean>(false);
+
   return (
     <div className="fixed bottom-0 gap-4 flex flex-col mx-2">
-      <Info
-        text={"Harooo kldsf kfds dfsgjio dsfgoidf nfvnj djf n sskjsk"}
-        buttonText={"Send"}
-      />
+      <Info id={"827358347593458"} invited={invited} setInvite={setInvite} />
       <div className="flex flex-row items-center sm:invisible mb-8">
         <Input
           size="lg"
@@ -34,14 +39,7 @@ export default function SendMess() {
             </div>
           }
           endContent={
-            <Button
-              onClick={() => {
-                sendMess(mess);
-                setMess("");
-              }}
-              variant="faded"
-              className="min-w-5 h-9"
-            >
+            <Button onClick={send} variant="faded" className="min-w-5 h-9">
               Send
             </Button>
           }
