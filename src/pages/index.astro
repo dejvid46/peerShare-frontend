@@ -3,6 +3,8 @@ import Layout from '../layouts/Layout.astro';
 import Title from '../components/Title.astro';
 import SendMess from '../react/SendMess';
 import Radar from '../components/Radar.astro';
+import Footer from '../components/Footer.astro';
+import NotificationContainer from '../react/NotificationContainer';
 ---
 
 
@@ -10,6 +12,9 @@ import Radar from '../components/Radar.astro';
 	<main class="flex flex-col items-center justify-between h-full">
 		<Radar size='250px' />
 		<Title/>
-		<SendMess client:only="react"/>
+		<Footer>
+			<NotificationContainer client:only="react"/>
+			<SendMess client:only="react"/>
+		</Footer>
 	</main>
 </Layout>

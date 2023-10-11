@@ -19,11 +19,11 @@ export default function UseNotification() {
   const {lastMess} = useWebSocket(invite);
 
   useEffect(() => {
-    if (lastMess) {
+    if (lastMess && !notifications.find((x: any) => x.id === lastMess.id && x.room ===lastMess.room && x.room)) {
       notifications.push(lastMess)
       setNotification(notifications)
     }
   }, [lastMess]);
 
-  // return [] of Notification for render
+  return notifications;
 }

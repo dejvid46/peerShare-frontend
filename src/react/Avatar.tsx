@@ -16,15 +16,15 @@ interface AvatarProps {
 }
 
 export default function Avatar({ rotate, translateX, id }: AvatarProps) {
-  const [isOpen, setIsOpen] = React.useState<undefined | string>(undefined);
+  const [text, setText] = React.useState<undefined | string>(undefined);
 
   const { lastMess } = useWebSocket(message(id));
 
   useEffect(() => {
-    setIsOpen(lastMess);
+    setText(lastMess);
     if (lastMess) {
       setTimeout(() => {
-        setIsOpen(undefined);
+        setText(undefined);
       }, 2000);
     }
   }, [lastMess]);
@@ -33,7 +33,7 @@ export default function Avatar({ rotate, translateX, id }: AvatarProps) {
     <Popover
       placement="bottom"
       showArrow={true}
-      isOpen={typeof isOpen !== "undefined"}
+      isOpen={typeof text !== "undefined"}
     >
       <div
         style={{
@@ -49,7 +49,7 @@ export default function Avatar({ rotate, translateX, id }: AvatarProps) {
       </div>
       <PopoverContent>
         <div className="px-1 py-2">
-          <div className="text-tiny">{isOpen}</div>
+          <div className="text-tiny">{text}</div>
         </div>
       </PopoverContent>
     </Popover>

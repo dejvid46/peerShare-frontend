@@ -6,10 +6,9 @@ import AvatarIcon from "./AvatarIcon";
 interface InfoPrpos {
   id: string;
   invited: boolean;
-  setInvite: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function Info({ id, invited, setInvite }: InfoPrpos) {
+export default function Info({ id, invited }: InfoPrpos) {
   return (
     <Card>
       <CardBody className="flex flex-col p-3 bg-default-100">
@@ -22,12 +21,7 @@ export default function Info({ id, invited, setInvite }: InfoPrpos) {
               <div>wants to join</div>
             </div>
             <div className="flex gap-2 sm:px-0 px-2">
-              <Button
-                size="sm"
-                color="success"
-                variant="bordered"
-                onClick={() => setInvite(true)}
-              >
+              <Button size="sm" color="success" variant="bordered">
                 Invite
               </Button>
             </div>
