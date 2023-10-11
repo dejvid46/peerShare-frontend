@@ -1,6 +1,7 @@
 import type { Result } from "./Result";
 import type { Err } from "./UseWebSocket";
 import { ok, err } from "./Result";
+import type { NewMember } from "./UseNotification";
 
 interface Room {
   id: string,
@@ -13,6 +14,16 @@ interface Members {
 
 export function test(x: string): Result<string, Err> {
   return { ok: true, value: x };
+}
+
+export function invite(x: string): Result<NewMember, Err> {
+  if(!x.startsWith("/invite "))  return err({message: "Must start with '/invite '"});
+  const body = x.split(" ");
+  const room = body[1];
+  const id = body[2];
+  if(!id || !room) return err({message: "Id and room must be number"});
+
+  return { ok: true, value: {room, id, invited: false} };
 }
 
 export function room(x: string): Result<Room, Err> {

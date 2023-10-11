@@ -16,6 +16,14 @@ export default class Notifications {
   static instance = new Notifications();
 
   constructor(
-    private _new_member_pool: Array<NewMember | AcceptFile> = [],
+    private _notifications: Array<NewMember | AcceptFile> = [],
   ) {}
+
+  public add(notification: NewMember | AcceptFile) {
+    !this._notifications.includes(notification) && this._notifications.push(notification);
+  }
+
+  public remove(index: number) {
+    this._notifications.splice(index, 1);;
+  }
 }
