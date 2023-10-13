@@ -2,13 +2,16 @@ import { Button, Card, CardBody } from "@nextui-org/react";
 import React from "react";
 import xSvg from "../icons/x.svg";
 import AvatarIcon from "./AvatarIcon";
+import type { NewMember } from "../helpers/Notifications";
+import type { Room } from "../helpers/Parsers";
 
 interface InfoPrpos {
-  id: string;
-  invited: boolean;
+  item: NewMember;
+  remove: (item: NewMember) => void;
+  sendMess: (mess: string) => void;
 }
 
-export default function Info({ id, invited }: InfoPrpos) {
+export default function NewMember({ item, remove, sendMess }: InfoPrpos) {
   return (
     <Card>
       <CardBody className="flex flex-col p-3 bg-default-100">
@@ -16,12 +19,20 @@ export default function Info({ id, invited }: InfoPrpos) {
           <div className="grow flex sm:flex-col items-center sm:items-start sm:gap-2 justify-between">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8">
-                <AvatarIcon id={id} p={true} />
+                <AvatarIcon id={item.id} p={true} />
               </div>
               <div>wants to join</div>
             </div>
             <div className="flex gap-2 sm:px-0 px-2">
-              <Button size="sm" color="success" variant="bordered">
+              <Button
+                size="sm"
+                color="success"
+                variant="bordered"
+                onClick={() => {
+                  sendMess(`/send ${item.room} ${item.id}`);
+                  remove(item);
+                }}
+              >
                 Invite
               </Button>
             </div>
@@ -33,6 +44,9 @@ export default function Info({ id, invited }: InfoPrpos) {
               radius="full"
               variant="light"
               size="sm"
+              onClick={() => {
+                remove(item);
+              }}
             >
               <div className="w-4 h-4">
                 <img

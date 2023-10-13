@@ -1,9 +1,9 @@
 import type { Result } from "./Result";
 import type { Err } from "./UseWebSocket";
 import { ok, err } from "./Result";
-import type { NewMember } from "./UseNotification";
+import type { NewMember } from "./Notifications";
 
-interface Room {
+export interface Room {
   id: string,
   key: string
 }
@@ -22,8 +22,8 @@ export function invite(x: string): Result<NewMember, Err> {
   const room = body[1];
   const id = body[2];
   if(!id || !room) return err({message: "Id and room must be number"});
-
-  return { ok: true, value: {room, id, invited: false} };
+  
+  return { ok: true, value: {room, id} };
 }
 
 export function room(x: string): Result<Room, Err> {

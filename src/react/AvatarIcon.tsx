@@ -21,7 +21,7 @@ export default function AvatarIcon({ id, rotate, p }: AvatarProps) {
   useEffect(() => {
     const svg = import(`../icons/${hash}.svg`);
     svg.then((x) => setLoad(x.default));
-  }, []);
+  }, [id]);
 
   return (
     <AvatarNextUi
