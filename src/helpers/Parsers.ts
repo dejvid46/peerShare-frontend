@@ -12,8 +12,19 @@ interface Members {
   ids: Array<string>,
 }
 
+export interface Send {
+  room: string,
+  key: string
+}
+
 export function test(x: string): Result<string, Err> {
   return { ok: true, value: x };
+}
+
+export function notifications(x: string): Result<NewMember | Send, Err> {
+  const resinvite = invite(x);
+  if(resinvite.ok) return resinvite;
+  return send(x);
 }
 
 export function invite(x: string): Result<NewMember, Err> {
@@ -21,9 +32,23 @@ export function invite(x: string): Result<NewMember, Err> {
   const body = x.split(" ");
   const room = body[1];
   const id = body[2];
-  if(!id || !room) return err({message: "Id and room must be number"});
+  if(!id || !room) return err({message: "Id and room required"});
   
   return { ok: true, value: {room, id} };
+}
+
+export function send(x: string): Result<Send, Err> {
+  if(!x.startsWith("/send "))  return err({message: "Must start with '/send '"});
+  const body = x.split(" ");
+  const room = body[1];
+  const key = body[2];
+  if(!key || !room) return err({message: "room and key required"});
+
+  const res = parseSome(key)
+  if (res.ok) {
+    return { ok: true, value: {room, key: res.value} }; 
+  }
+  return res;
 }
 
 export function room(x: string): Result<Room, Err> {
@@ -62,4 +87,11 @@ export function message(y: string): (x: string) => Result<string, Err> {
 
     return ok(mess);
   }
+}
+
+function parseSome(inputString: string): Result<string, Err>{
+  if (inputString.startsWith("Some(") && inputString.endsWith(")")) {
+    return ok(inputString.substring(5, inputString.length - 1));
+  }
+  return err({message: "Invalid input format. Expected format: Some(<numeric_value>)"});
 }

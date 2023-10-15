@@ -1,3 +1,5 @@
+import type { Result } from "./Result";
+import type { Err } from "./UseWebSocket";
 
 export enum ReadyState {
   UNINSTANTIATED = -1,
@@ -6,32 +8,64 @@ export enum ReadyState {
   CLOSE = 2,
 }
 
-export default class Ws {
+interface Cache<T> {
+  listeners: Array<(data: T) => void>
+  cache: T | undefined
+}
+
+export default class Ws<T> {
 
   static instance = new Ws();
 
   constructor(
     private _ws = new WebSocket(`ws://127.0.0.1:8080/ws`),
     public state = ReadyState.CONNECTING,
-    private _listener: Array<(state: ReadyState) => void> = new Array()
+    private _listener: Array<(state: ReadyState) => void> = new Array(),
+    private _parserCache: Map<(body: string) => Result<any, Err>, Cache<any>> = new Map(),
   ) {
     this._ws.onopen = () => {
       this.state = ReadyState.OPEN;
-      _listener.forEach(x => x(this.state));
+      this._listener.forEach(x => x(this.state));
     };
     this._ws.onclose = () => {
       this.state = ReadyState.CLOSE;
-      _listener.forEach(x => x(this.state));
+      this._listener.forEach(x => x(this.state));
     };
     this._ws.onerror = () => {
       this.state = ReadyState.UNINSTANTIATED;
-      _listener.forEach(x => x(this.state));
+      this._listener.forEach(x => x(this.state));
     }
   }
 
-  public add(fn: (event: MessageEvent<any>) => void) {
-    this._ws.addEventListener("message", fn);
+  public add<T>(parser: (body: string) => Result<T, Err>, listener: (data: T) => void) {
+    const cache = this._parserCache.get(parser);
+    if(cache){
+      this._parserCache.set(parser, {cache: cache.cache, listeners: [...cache.listeners, listener]});
+    }else{
+      this._parserCache.set(parser, {cache: undefined, listeners: [listener]});
+
+      this._ws.addEventListener("message", (e: MessageEvent<string>) => {
+        const res = parser(e.data);
+        if (res.ok) {
+          const cache = this._parserCache.get(parser);
+          if (cache) {
+            this._parserCache.set(parser, {cache: res.value, listeners: cache.listeners});
+            cache.listeners.forEach(listener => listener(res.value));
+          }
+        }else{
+          //console.error({mess: res.error, send: mess});
+        }
+      });
+    }
   }
+
+  public getCache<T>(parser: (body: string) => Result<T, Err>){
+    return this._parserCache.get(parser)?.cache;
+  }
+
+  // public add(fn: (event: MessageEvent<any>) => void) {
+  //   this._ws.addEventListener("message", fn);
+  // }
 
   public addStateListener(listener: (state: ReadyState) => void) {
     this._listener.push(listener);

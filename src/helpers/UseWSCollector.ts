@@ -11,14 +11,7 @@ export default function useWSCollector<T>(parse?: (body: string) => Result<T, Er
   const [state, setState] = useState<ReadyState>(Ws.instance.state);
 
   useEffect(() => {
-    parse && Ws.instance.add((e) => {
-      const res = parse(e.data);
-      if (res.ok) {
-        setCollector(collector => [...collector, res.value]);
-      }else{
-        //console.error({mess: res.error, send: mess});
-      }
-    })
+    parse && Ws.instance.add(parse, (data: T) => setCollector(collector => [...collector, data]));
     
     Ws.instance.addStateListener((state) => {
       setState(state);
