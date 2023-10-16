@@ -19,10 +19,6 @@ function window<T>(arr: Array<T>, f: (a: T, b: T) => boolean) {
 export default function AvatarPosition({ id, order, count }: AvatarProps) {
   const steps = [0, 10, 32];
 
-  if (order === 1) {
-    return <Avatar id={id} rotate={0} translateX={0} />;
-  }
-
   const step = window(steps, (a, b) => a <= order - 1 && order - 1 <= b);
 
   const maxStep = window(steps, (a, b) => a <= count - 1 && count - 1 <= b);

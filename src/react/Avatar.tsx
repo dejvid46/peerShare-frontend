@@ -19,6 +19,7 @@ export default function Avatar({ rotate, translateX, id }: AvatarProps) {
   const [text, setText] = React.useState<undefined | string>(undefined);
 
   const { lastMess } = useWebSocket(message(id));
+  console.log(id)
 
   useEffect(() => {
     setText(lastMess);

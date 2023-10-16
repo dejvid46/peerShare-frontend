@@ -83,6 +83,7 @@ export function message(y: string): (x: string) => Result<string, Err> {
     const id = body[1];
     const mess = body.slice(2).join(" ");
     if(!id || !mess) return err({message: "Id and message must be included"});
+    //console.log(id, " - ", y)
     if(id !== y) return err({message: "Id is not same"});
 
     return ok(mess);
