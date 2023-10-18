@@ -1,11 +1,12 @@
 import React from "react";
 import AvatarPosition from "./AvatarPosition";
 import useWebSocket from "../helpers/UseWebSocket";
-import { members, id } from "../helpers/Parsers";
+import { members, id, message } from "../helpers/Parsers";
 
 export default function AvatarCircle() {
   const { lastMess: idLastMess } = useWebSocket(id, "/id");
   const { lastMess: membersLastMess } = useWebSocket(members, "/members");
+  const { lastMess } = useWebSocket(message);
 
   if (!membersLastMess || !idLastMess) {
     return <></>;
@@ -21,6 +22,7 @@ export default function AvatarCircle() {
           id={x}
           order={i + 2}
           count={membersLastMess.ids.length}
+          mess={lastMess?.id === x ? lastMess.mess : undefined}
         />
       ))}
     </div>

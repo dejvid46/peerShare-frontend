@@ -57,7 +57,6 @@ export default class Ws<T> {
         }
       });
     }
-    console.log(this._parserCache);
   }
 
   public getCache<T>(parser: (body: string) => Result<T, Err>){

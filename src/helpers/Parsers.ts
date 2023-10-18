@@ -17,6 +17,11 @@ export interface Send {
   key: string
 }
 
+export interface Message {
+  id: string;
+  mess: string;
+} 
+
 export function test(x: string): Result<string, Err> {
   return { ok: true, value: x };
 }
@@ -76,18 +81,14 @@ export function id(x: string): Result<string, Err> {
   return ok(id);
 }
 
-export function message(y: string): (x: string) => Result<string, Err> {
-  return (x) => {
-    if(!x.startsWith("/message "))  return err({message: "Must start with '/message '"});
-    const body = x.split(" ");
-    const id = body[1];
-    const mess = body.slice(2).join(" ");
-    if(!id || !mess) return err({message: "Id and message must be included"});
-    //console.log(id, " - ", y)
-    if(id !== y) return err({message: "Id is not same"});
+export function message(x: string): Result<Message, Err> {
+  if(!x.startsWith("/message "))  return err({message: "Must start with '/message '"});
+  const body = x.split(" ");
+  const id = body[1];
+  const mess = body.slice(2).join(" ");
+  if(!id || !mess) return err({message: "Id and message must be included"});
 
-    return ok(mess);
-  }
+  return ok({mess, id});
 }
 
 function parseSome(inputString: string): Result<string, Err>{

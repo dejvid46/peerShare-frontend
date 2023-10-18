@@ -1,41 +1,33 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Avatar as AvatarNextUi,
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@nextui-org/react";
-import useWebSocket from "../helpers/UseWebSocket";
-import { message } from "../helpers/Parsers";
 import AvatarIcon from "./AvatarIcon";
 
 interface AvatarProps {
   id: string;
   translateX: number;
   rotate: number;
+  text?: string;
 }
 
-export default function Avatar({ rotate, translateX, id }: AvatarProps) {
-  const [text, setText] = React.useState<undefined | string>(undefined);
-
-  const { lastMess } = useWebSocket(message(id));
-  console.log(id)
+export default function Avatar({ rotate, translateX, id, text }: AvatarProps) {
+  const [mess, setMess] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    setText(lastMess);
-    if (lastMess) {
+    setMess(text);
+    if (text && !mess) {
       setTimeout(() => {
-        setText(undefined);
-      }, 2000);
+        setMess(undefined);
+      }, 3500);
     }
-  }, [lastMess]);
+  }, [text]);
 
   return (
-    <Popover
-      placement="bottom"
-      showArrow={true}
-      isOpen={typeof text !== "undefined"}
-    >
+    <Popover placement="bottom" showArrow={true} isOpen={mess ? true : false}>
       <div
         style={{
           transform: `rotate(${rotate}deg) translateX(${translateX}%)`,
@@ -50,7 +42,7 @@ export default function Avatar({ rotate, translateX, id }: AvatarProps) {
       </div>
       <PopoverContent>
         <div className="px-1 py-2">
-          <div className="text-tiny">{text}</div>
+          <div className="text-tiny">{mess}</div>
         </div>
       </PopoverContent>
     </Popover>

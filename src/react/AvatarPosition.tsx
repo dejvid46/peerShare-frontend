@@ -5,6 +5,7 @@ interface AvatarProps {
   id: string;
   order: number;
   count: number;
+  mess?: string;
 }
 
 function window<T>(arr: Array<T>, f: (a: T, b: T) => boolean) {
@@ -16,7 +17,12 @@ function window<T>(arr: Array<T>, f: (a: T, b: T) => boolean) {
   return undefined;
 }
 
-export default function AvatarPosition({ id, order, count }: AvatarProps) {
+export default function AvatarPosition({
+  id,
+  order,
+  count,
+  mess,
+}: AvatarProps) {
   const steps = [0, 10, 32];
 
   const step = window(steps, (a, b) => a <= order - 1 && order - 1 <= b);
@@ -36,5 +42,5 @@ export default function AvatarPosition({ id, order, count }: AvatarProps) {
   const rotate = (360 / circleSize) * positionInCircle + 270;
   const translateX = step * 200;
 
-  return <Avatar rotate={rotate} translateX={translateX} id={id} />;
+  return <Avatar rotate={rotate} translateX={translateX} id={id} text={mess} />;
 }
