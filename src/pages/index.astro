@@ -1,20 +1,24 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Title from '../components/Title.astro';
-import SendMess from '../react/SendMess';
-import Radar from '../components/Radar.astro';
-import Footer from '../components/Footer.astro';
-import NotificationContainer from '../react/NotificationContainer';
+import Layout from "../layouts/Layout.astro";
+import Title from "../components/Title.astro";
+import SendMess from "../react/SendMess";
+import Radar from "../components/Radar.astro";
+import Footer from "../components/Footer.astro";
+import NotificationContainer from "../react/NotificationContainer";
+import NotificationContainerForPc from "../components/NotificationContainerForPc.astro";
 ---
 
-
 <Layout title="Welcome to Astro.">
-	<main class="flex flex-col items-center justify-between h-full">
-		<Radar size='250px' />
-		<Title/>
-		<Footer>
-			<NotificationContainer client:only="react"/>
-			<SendMess client:only="react"/>
-		</Footer>
-	</main>
+  <main class="flex flex-col items-center justify-between h-full">
+    <Radar size="250px" />
+    <Title />
+    <Footer>
+      <div class="flex flex-col-reverse gap-4">
+        <NotificationContainerForPc>
+          <NotificationContainer client:only="react" />
+        </NotificationContainerForPc>
+      </div>
+      <SendMess client:only="react" />
+    </Footer>
+  </main>
 </Layout>

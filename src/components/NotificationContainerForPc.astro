@@ -1,0 +1,39 @@
+---
+---
+
+<div class="notification-container">
+  <div class="box"></div>
+  <div class="box"></div>
+  <slot />
+</div>
+
+<style>
+  @media (min-width: 640px) {
+    .notification-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: grid;
+      grid-gap: 0px 5px;
+      grid-template-columns: 1fr 1fr;
+      grid-auto-flow: dense;
+    }
+
+    .box {
+      border-radius: 5px;
+      padding: 60px;
+      font-size: 150%;
+    }
+
+    .box:not(:first-child) {
+      grid-row: span 2;
+    }
+    .box:nth-child(-n + 2) {
+      padding: 0px;
+      visibility: hidden;
+    }
+    .box:nth-child(n + 3):not(:last-child) {
+      margin-bottom: 5px;
+    }
+  }
+</style>
