@@ -1,7 +1,11 @@
 import type { Result } from "./Result";
 import type { Err } from "./UseWebSocket";
 import { ok, err } from "./Result";
-import type { NewMember } from "./Notifications";
+
+export interface NewMember{
+  id: string;
+  room: string;
+}
 
 export interface Room {
   id: string,
@@ -10,6 +14,10 @@ export interface Room {
 
 interface Members {
   ids: Array<string>,
+}
+
+export interface Error {
+  error_message: string
 }
 
 export interface Send {
@@ -26,9 +34,11 @@ export function test(x: string): Result<string, Err> {
   return { ok: true, value: x };
 }
 
-export function notifications(x: string): Result<NewMember | Send, Err> {
+export function notifications(x: string): Result<NewMember | Send | Error, Err> {
   const resinvite = invite(x);
   if(resinvite.ok) return resinvite;
+  const reserror = error(x);
+  if(reserror.ok) return reserror;
   return send(x);
 }
 
@@ -40,6 +50,15 @@ export function invite(x: string): Result<NewMember, Err> {
   if(!id || !room) return err({message: "Id and room required"});
   
   return { ok: true, value: {room, id} };
+}
+
+export function error(x: string): Result<Error, Err> {
+  if(!x.startsWith("!!! "))  return err({message: "Must start with '!!! '"});
+  const body = x.split(" ");
+  const mess = body.slice(1).join(" ");
+  if(!mess) return err({message: "Message required"});
+  
+  return ok({error_message: mess});
 }
 
 export function send(x: string): Result<Send, Err> {

@@ -1,12 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import {
-  Avatar as AvatarNextUi,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@nextui-org/react";
-import useWebSocket from "../helpers/UseWebSocket";
-import { message } from "../helpers/Parsers";
+import { Avatar as AvatarNextUi } from "@nextui-org/react";
 
 interface AvatarProps {
   id: string;

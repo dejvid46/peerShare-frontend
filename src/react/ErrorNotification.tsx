@@ -1,49 +1,29 @@
 import { Button, Card, CardBody } from "@nextui-org/react";
 import React from "react";
 import xSvg from "../icons/x.svg";
-import type { Send } from "../helpers/Parsers";
-import enter from "../icons/enter.svg";
+import warning from "../icons/warning.svg";
+import type { Error } from "../helpers/Parsers";
 
-interface SendNotificationPrpos {
-  item: Send;
-  remove: (item: Send) => void;
-  sendMess: (mess: string) => void;
+interface ErrorPrpos {
+  item: Error;
+  remove: (item: Error) => void;
 }
 
-export default function SendNotification({
-  item,
-  remove,
-  sendMess,
-}: SendNotificationPrpos) {
+export default function ErrorNotification({ item, remove }: ErrorPrpos) {
   return (
     <Card className="h-full">
-      <CardBody className="flex flex-col p-3 bg-default-100">
+      <CardBody className="flex flex-col p-3 bg-default-100 sm:gap-3">
         <div className="grow w-full flex">
-          <div className="grow flex sm:flex-col items-center sm:items-start sm:gap-2 justify-between">
+          <div className="grow flex sm:flex-col items-center sm:items-start sm:gap-3 justify-between">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8">
                 <img
                   className="h-auto w-full "
-                  src={enter}
+                  src={warning}
                   alt="enter room icon"
                 />
               </div>
-              <div>join room {item.room}?</div>
-            </div>
-            <div className="flex gap-2 sm:px-0 px-2">
-              <Button
-                size="sm"
-                color="success"
-                variant="bordered"
-                onClick={() => {
-                  sendMess(`/join ${item.room} ${item.key}`);
-                  sendMess("/room");
-                  sendMess("/members");
-                  remove(item);
-                }}
-              >
-                Join
-              </Button>
+              <div>{item.error_message}</div>
             </div>
           </div>
           <div className="flex flex-col justify-center sm:justify-start">
@@ -67,6 +47,11 @@ export default function SendNotification({
             </Button>
           </div>
         </div>
+        {/* {progres && (
+          <div className="w-full mt-2 sm:mt-3">
+            <Progress size="sm" aria-label="Loading..." value={progres} />
+          </div>
+        )} */}
       </CardBody>
     </Card>
   );

@@ -28,6 +28,6 @@ export default function useWebSocket<T>(parse?: (body: string) => Result<T, Err>
 }
 
 function sendMess(message: string, state: ReadyState){
-  state && Ws.instance.sendMessage(message);
-  state && console.log("send: ", message);
+  state === 1 && Ws.instance.sendMessage(message);
+  state === 1 && console.log("send: ", message);
 }

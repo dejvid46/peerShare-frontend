@@ -1,5 +1,5 @@
 import { Button, Input } from "@nextui-org/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { Room } from "../helpers/Parsers";
 
 interface RoomInptProps {
@@ -12,9 +12,13 @@ export default function RoomInpt({ children, room, sendMess }: RoomInptProps) {
   const [roomInput, setRoomInput] = useState(room.id);
 
   const invite = () => {
-    room.id !== roomInput && sendMess(`/invite ${roomInput}`);
+    room.id !== roomInput && roomInput && sendMess(`/invite ${roomInput}`);
     setRoomInput((roomInput) => room.id);
   };
+
+  useEffect(() => {
+    setRoomInput((roomInput) => room.id);
+  }, [room]);
 
   return (
     <div className="flex flex-row items-center mx-2">
