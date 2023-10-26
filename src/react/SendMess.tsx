@@ -1,10 +1,15 @@
 import { Button, Input } from "@nextui-org/react";
 import React, { useState } from "react";
-import NotificationContainer from "./NotificationContainer";
 import useWebSocket from "../helpers/UseWebSocket";
+import type { Message } from "../helpers/Parsers";
+import { id } from "../helpers/Parsers";
 
-export default function SendMess() {
-  const { sendMess } = useWebSocket();
+interface SendMessProps {
+  add?: (item: Message) => void;
+}
+
+export default function SendMess({ add }: SendMessProps) {
+  const { sendMess, lastMess } = useWebSocket(id);
   const [mess, setMess] = useState("");
 
   const handleKeyDown = (event: any) => {
@@ -16,12 +21,13 @@ export default function SendMess() {
   const send = () => {
     if (mess) {
       sendMess(mess);
+      add && lastMess && add({ id: lastMess, mess: mess } as Message);
       setMess("");
     }
   };
 
   return (
-    <div className="flex flex-row items-center sm:invisible mb-8">
+    <div className="flex flex-row items-center">
       <Input
         size="lg"
         value={mess}

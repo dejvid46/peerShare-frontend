@@ -23,7 +23,18 @@ export default function useWSCollector<T>(parse?: (body: string) => Result<T, Er
     sendMess(mess, state);
   }, [state]);
 
-  return {collector, dropColector: () => setCollector([]), sendMess: (mess: string) => {sendMess(mess, state)}, state, remove: (item: T) => remove(item, collector, setCollector)};
+  return {
+    collector, 
+    add: (item: T) => add(item, setCollector), 
+    dropColector: () => setCollector([]), 
+    sendMess: (mess: string) => {sendMess(mess, state)}, 
+    state, 
+    remove: (item: T) => remove(item, collector, setCollector)
+  };
+}
+
+function add<T>(item: T, setCollector: React.Dispatch<React.SetStateAction<T[]>>) {
+  setCollector(collector => [...collector, item]);
 }
 
 function sendMess(message: string, state: ReadyState){

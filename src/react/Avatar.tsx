@@ -27,24 +27,24 @@ export default function Avatar({ rotate, translateX, id, text }: AvatarProps) {
   }, [text]);
 
   return (
-    <Popover placement="bottom" showArrow={true} isOpen={mess ? true : false}>
-      <div
-        style={{
-          transform: `rotate(${rotate}deg) translateX(${translateX}%)`,
-        }}
-        className="absolute sm:h-16 sm:w-16 sm:left-[calc(50%_-_32px)] sm:top-[calc(50%_-_32px)] h-12 w-12 left-[calc(50%_-_24px)] top-[calc(50%_-_24px)] rounded-[50%]"
-      >
+    <div
+      style={{
+        transform: `rotate(${rotate}deg) translateX(${translateX}%)`,
+      }}
+      className="absolute sm:h-16 sm:w-16 sm:left-[calc(50%_-_32px)] sm:top-[calc(50%_-_32px)] h-12 w-12 left-[calc(50%_-_24px)] top-[calc(50%_-_24px)] rounded-[50%]"
+    >
+      <Popover placement="bottom" showArrow={true} isOpen={mess ? true : false}>
         <PopoverTrigger>
           <div className="transition-transform transform-gpu hover:scale-125 w-full h-full">
             <AvatarIcon id={id} rotate={rotate} />
           </div>
         </PopoverTrigger>
-      </div>
-      <PopoverContent>
-        <div className="px-1 py-2">
-          <div className="text-tiny">{mess}</div>
-        </div>
-      </PopoverContent>
-    </Popover>
+        <PopoverContent>
+          <div className="px-1 py-2">
+            <div className="text-tiny">{mess}</div>
+          </div>
+        </PopoverContent>
+      </Popover>
+    </div>
   );
 }

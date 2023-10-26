@@ -5,17 +5,19 @@ import SendMess from "../react/SendMess";
 import Radar from "../components/Radar.astro";
 import Footer from "../components/Footer.astro";
 import NotificationContainer from "../react/NotificationContainer";
-import Chat from "../react/Chat";
+import ChatSendMess from "../react/ChatSendMess";
 ---
 
 <Layout title="Welcome to Astro.">
   <main class="flex flex-col items-center justify-between h-full">
     <Radar size="250px" />
     <Title />
-    <Chat client:only="react" />
+    <ChatSendMess client:only="react" />
     <Footer>
       <NotificationContainer client:only="react" />
-      <SendMess client:only="react" />
+      <div class="block lg:hidden mb-8">
+        <SendMess client:only="react" />
+      </div>
     </Footer>
   </main>
 </Layout>

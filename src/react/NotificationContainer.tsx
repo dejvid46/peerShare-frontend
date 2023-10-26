@@ -20,18 +20,18 @@ export default function NotificationContainer() {
   return (
     <div
       dir="rtl"
-      className="sm:fixed bg-transparent sm:left-[10%] sm:-translate-x-[10%] sm:-translate-y-2/4 sm:top-2/4 sm:max-h-[50%] sm:overflow-auto"
+      className="lg:fixed bg-transparent lg:left-[10%] lg:-translate-x-[10%] lg:-translate-y-2/4 lg:top-2/4 lg:max-h-[50%] lg:overflow-auto"
     >
       <div
         dir="ltr"
-        className="sm:grid sm:gap-[0px_1rem] sm:grid-cols-[1fr] xl:grid-cols-[1fr_1fr] sm:grid-flow-dense"
+        className="lg:grid lg:gap-[0px_1rem] lg:grid-cols-[1fr] xl:grid-cols-[1fr_1fr] lg:grid-flow-dense"
       >
         <div className="invisible"></div>
-        <div className="invisible sm:row-[span_2]"></div>
+        <div className="invisible lg:row-[span_2]"></div>
         {collector.map((notification: any, key: number) => {
           if (notification.id) {
             return (
-              <div key={key} className="mb-4 sm:row-[span_2] bg-transparent">
+              <div key={key} className="mb-4 lg:row-[span_2] bg-transparent">
                 <Invite
                   sendMess={sendMess}
                   item={notification as NewMember}
@@ -41,7 +41,7 @@ export default function NotificationContainer() {
             );
           } else if (notification.key) {
             return (
-              <div key={key} className="mb-4 sm:row-[span_2] bg-transparent">
+              <div key={key} className="mb-4 lg:row-[span_2] bg-transparent">
                 <SendNotification
                   sendMess={sendMess}
                   item={notification as Send}
@@ -51,7 +51,7 @@ export default function NotificationContainer() {
             );
           } else if (notification.error_message) {
             return (
-              <div key={key} className="mb-4 sm:row-[span_2] bg-transparent">
+              <div key={key} className="mb-4 lg:row-[span_2] bg-transparent">
                 <ErrorNotification
                   item={notification as Error}
                   remove={remove}
