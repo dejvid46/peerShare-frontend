@@ -2,6 +2,7 @@ import React from "react";
 import AvatarPosition from "./AvatarPosition";
 import useWebSocket from "../helpers/UseWebSocket";
 import { members, id, message } from "../helpers/Parsers";
+import MyAvatar from "./MyAvatar";
 
 export default function AvatarCircle() {
   const { lastMess: idLastMess } = useWebSocket(id, "/id");
@@ -15,7 +16,7 @@ export default function AvatarCircle() {
 
   return (
     <div>
-      {<AvatarPosition id={idLastMess} order={1} count={1} />}
+      {<MyAvatar id={idLastMess} rotate={0} translateX={0} />}
       {noYou.map((x, i) => (
         <AvatarPosition
           key={i}
