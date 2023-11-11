@@ -5,11 +5,18 @@ import { NewMember, Send, notifications, room } from "../helpers/Parsers";
 import useWebSocket from "../helpers/UseWebSocket";
 import SendNotification from "./SendNotification";
 import ErrorNotification from "./ErrorNotification";
-import type { Error } from "../helpers/Parsers";
+import ReceiveFileNotification from "./ReceiveFileNotification";
+import type { Error, JsonStructiure } from "../helpers/Parsers";
 
 export default function NotificationContainer() {
   const { lastMess, sendMess } = useWebSocket(room);
   const { collector, remove, dropColector } = useWSCollector(notifications);
+
+  /*
+  cau davidku tady zuzanka lmaoooooo
+
+  moc dobry
+  */
 
   useEffect(() => {
     dropColector();
@@ -54,6 +61,15 @@ export default function NotificationContainer() {
               <div key={key} className="mb-4 lg:row-[span_2] bg-transparent">
                 <ErrorNotification
                   item={notification as Error}
+                  remove={remove}
+                />
+              </div>
+            );
+          } else if (notification.type === "offer") {
+            return (
+              <div key={key} className="mb-4 lg:row-[span_2] bg-transparent">
+                <ReceiveFileNotification
+                  item={notification as JsonStructiure}
                   remove={remove}
                 />
               </div>

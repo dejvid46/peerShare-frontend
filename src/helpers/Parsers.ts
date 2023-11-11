@@ -24,26 +24,42 @@ export interface Send {
   room: string,
   key: string
 }
-
 export interface Message {
   id: string;
   mess: string;
+} 
+export interface JsonStructiure {
+  type: string;
+  id: string;
+  json: any;
 } 
 
 export function test(x: string): Result<string, Err> {
   return { ok: true, value: x };
 }
 
-export function notifications(x: string): Result<NewMember | Send | Error, Err> {
+export function parseDirectIdJSON(x: string): Result<JsonStructiure, Err> {
+  if(!x.startsWith("/direct_message ")) return err({message: "Must start with '/direct_message '"});
+  const body = x.split(" ");
+  const id = body[1];
+  const type = body[2];
+  const json = JSON.parse(body.slice(3).join(" "))
+  if(!type || !json || !id) return err({message: "Type and json required"});
+  return ok({type, id, json});
+}
+
+export function notifications(x: string): Result<JsonStructiure | NewMember | Send | Error, Err> {
   const resinvite = invite(x);
   if(resinvite.ok) return resinvite;
   const reserror = error(x);
   if(reserror.ok) return reserror;
+  // const resOffer = parseDirectIdJSON(x);
+  // if(resOffer.ok) return resOffer;
   return send(x);
 }
 
 export function invite(x: string): Result<NewMember, Err> {
-  if(!x.startsWith("/invite "))  return err({message: "Must start with '/invite '"});
+  if(!x.startsWith("/invite ")) return err({message: "Must start with '/invite '"});
   const body = x.split(" ");
   const room = body[1];
   const id = body[2];

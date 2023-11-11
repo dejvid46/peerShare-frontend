@@ -6,6 +6,7 @@ import {
   Button,
 } from "@nextui-org/react";
 import AvatarIcon from "./AvatarIcon";
+import WebRTCContainer from "../helpers/WebRTCContainer";
 
 interface AvatarProps {
   id: string;
@@ -108,10 +109,21 @@ export default function Avatar({ rotate, translateX, id, text }: AvatarProps) {
                 )}
               </div>
               <div className="flex justify-around gap-2">
-                <Button color="success" variant="bordered">
+                <Button
+                  onClick={() => {
+                    WebRTCContainer.instance.register(id);
+                    setFiles(undefined);
+                  }}
+                  color="success"
+                  variant="bordered"
+                >
                   Send
                 </Button>
-                <Button color="danger" variant="bordered">
+                <Button
+                  onClick={() => setFiles(undefined)}
+                  color="danger"
+                  variant="bordered"
+                >
                   Cancel
                 </Button>
               </div>

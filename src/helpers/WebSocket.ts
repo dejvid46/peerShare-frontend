@@ -13,7 +13,7 @@ interface Cache<T> {
   cache: T | undefined
 }
 
-export default class Ws<T> {
+export default class Ws {
 
   static instance = new Ws();
 
@@ -35,6 +35,9 @@ export default class Ws<T> {
       this.state = ReadyState.UNINSTANTIATED;
       this._listener.forEach(x => x(this.state));
     }
+    // this._ws.addEventListener("message", (e: MessageEvent<string>) => {
+    //   console.log(e.data)
+    // });
   }
 
   public add<T>(parser: (body: string) => Result<T, Err>, listener: (data: T) => void) {

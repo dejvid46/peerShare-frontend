@@ -21,7 +21,13 @@ export default function ChatSendMess() {
                 return (
                   <div key={i} className="flex">
                     <div className="w-6 h-6 m-1 mr-2">
-                      <AvatarIcon id={mess.id} rotate={0} p={true} />
+                      <AvatarIcon
+                        id={mess.id}
+                        rotate={0}
+                        p={true}
+                        w={24}
+                        h={24}
+                      />
                     </div>
                     <Card className="bg-[#27272A]">
                       <CardBody className="px-4 py-2">
