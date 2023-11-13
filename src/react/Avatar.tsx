@@ -112,6 +112,7 @@ export default function Avatar({ rotate, translateX, id, text }: AvatarProps) {
                 <Button
                   onClick={() => {
                     WebRTCContainer.instance.register(id);
+                    WebRTCContainer.instance.sendFiles(id, files);
                     setFiles(undefined);
                   }}
                   color="success"

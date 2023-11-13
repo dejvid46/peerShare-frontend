@@ -1,13 +1,18 @@
 import { sendDirectObj } from "./WebRTCContainer";
 import Ws from "./WebSocket";
+import DataChannel from "./DataChannel";
 
 export default class WebRTC {
   constructor(
-    private id: string, 
+    public id: string,
     private offer?: RTCSessionDescriptionInit | undefined,
     public rtc: RTCPeerConnection = new RTCPeerConnection(),
+    private dc: DataChannel = new DataChannel(rtc, offer ? false : true),
   ) {
-    this.rtc.createDataChannel('sendDataChannel');
+    this.rtc.addEventListener("icecandidate", async event => {
+      Ws.instance.sendMessage(sendDirectObj("icecandidate", this.id, event.candidate));
+    });
+
     if(!this.offer){
       this.rtc.createOffer()
         .then(offer => this.rtc.setLocalDescription(new RTCSessionDescription(offer)))
@@ -18,8 +23,20 @@ export default class WebRTC {
       this.rtc.setRemoteDescription(this.offer);
       this.rtc.createAnswer()
         .then(answer => this.rtc.setLocalDescription(new RTCSessionDescription(answer)))
-        .then(() => (Ws.instance.sendMessage(sendDirectObj("answer", this.id, this.rtc.localDescription))));
+        .then(() => {
+          Ws.instance.sendMessage(sendDirectObj("answer", this.id, this.rtc.localDescription));
+        });
     }
   }
 
+  public disconnect() {
+    this.dc.close();
+    this.rtc.close();
+  }
+
+  public sendFiles(files: Array<File>){
+    const mess = files.map(x => x.name).join(" ");
+
+    this.dc.send(mess);
+  }
 }
