@@ -11,7 +11,7 @@ interface ErrorPrpos {
 
 export default function ErrorNotification({ item, remove }: ErrorPrpos) {
   return (
-    <Card className="h-full">
+    <Card shadow="none" className="h-full">
       <CardBody className="flex flex-col p-3 bg-default-100 sm:gap-3">
         <div className="grow w-full flex">
           <div className="grow flex sm:flex-col items-center sm:items-start sm:gap-3 justify-between">

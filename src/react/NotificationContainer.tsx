@@ -5,8 +5,8 @@ import { NewMember, Send, notifications, room } from "../helpers/Parsers";
 import useWebSocket from "../helpers/UseWebSocket";
 import SendNotification from "./SendNotification";
 import ErrorNotification from "./ErrorNotification";
-import ReceiveFileNotification from "./ReceiveFileNotification";
-import type { Error, JsonStructiure } from "../helpers/Parsers";
+import AcceptFileSharing from "./AcceptFileSharing";
+import type { Acceptation, Error } from "../helpers/Parsers";
 
 export default function NotificationContainer() {
   const { lastMess, sendMess } = useWebSocket(room);
@@ -27,7 +27,7 @@ export default function NotificationContainer() {
   return (
     <div
       dir="rtl"
-      className="lg:fixed bg-transparent lg:left-[10%] lg:-translate-x-[10%] lg:-translate-y-2/4 lg:top-2/4 lg:max-h-[50%] lg:overflow-auto"
+      className="lg:fixed bg-transparent lg:left-[5%] lg:max-w-[400px] lg:-translate-x-[5%] lg:-translate-y-2/4 lg:top-2/4 lg:max-h-[50%] lg:overflow-auto"
     >
       <div
         dir="ltr"
@@ -65,11 +65,11 @@ export default function NotificationContainer() {
                 />
               </div>
             );
-          } else if (notification.type === "offer") {
+          } else if (notification.acceptationId) {
             return (
               <div key={key} className="mb-4 lg:row-[span_2] bg-transparent">
-                <ReceiveFileNotification
-                  item={notification as JsonStructiure}
+                <AcceptFileSharing
+                  item={notification as Acceptation}
                   remove={remove}
                 />
               </div>

@@ -2,20 +2,19 @@ import { Button, Card, CardBody } from "@nextui-org/react";
 import React from "react";
 import xSvg from "../icons/x.svg";
 import warning from "../icons/warning.svg";
-import type { JsonStructiure } from "../helpers/Parsers";
-import WebRTCContainer from "../helpers/WebRTCContainer";
+import type { Acceptation } from "../helpers/Parsers";
 
-interface ReceiveFileNotificationPrpos {
-  item: JsonStructiure;
-  remove: (item: JsonStructiure) => void;
+interface AcceptFileSharingPrpos {
+  item: Acceptation;
+  remove: (item: Acceptation) => void;
 }
 
-export default function ReceiveFileNotification({
+export default function AcceptFileSharing({
   item,
   remove,
-}: ReceiveFileNotificationPrpos) {
+}: AcceptFileSharingPrpos) {
   return (
-    <Card className="h-full">
+    <Card shadow="none" className="h-full">
       <CardBody className="flex flex-col p-3 bg-default-100">
         <div className="grow w-full flex">
           <div className="grow flex sm:flex-col items-center sm:items-start sm:gap-2 justify-between">
@@ -35,7 +34,7 @@ export default function ReceiveFileNotification({
                 color="success"
                 variant="bordered"
                 onClick={() => {
-                  WebRTCContainer.instance.register(item.id);
+                  // todoooo
                   remove(item);
                 }}
               >

@@ -1,7 +1,6 @@
-import { Button, Input } from "@nextui-org/react";
-import React, { useState } from "react";
+import React from "react";
 import useWebSocket from "../helpers/UseWebSocket";
-import { room, test } from "../helpers/Parsers";
+import { room } from "../helpers/Parsers";
 import RoomInptut from "./RoomInput";
 
 interface RoomProps {

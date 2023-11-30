@@ -11,7 +11,7 @@ export default function ChatSendMess() {
   const { lastMess } = useWebSocket(id);
 
   return (
-    <div className="hidden lg:block fixed bg-transparent w-[20%] max-w-[300px] min-w-[200px] right-[10%] -translate-y-2/4 top-2/4 h-[50%]">
+    <div className="hidden lg:block fixed bg-transparent w-[20%] max-w-[300px] min-w-[200px] right-[5%] -translate-y-2/4 top-2/4 h-[50%]">
       <Card className="h-full">
         <CardBody className="h-full flex flex-col-reverse gap-4">
           <SendMess add={add} />

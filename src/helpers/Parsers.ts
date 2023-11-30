@@ -12,6 +12,10 @@ export interface Room {
   key: string
 }
 
+export interface Acceptation {
+  acceptationId: string,
+}
+
 interface Members {
   ids: Array<string>,
 }
@@ -34,6 +38,15 @@ export interface JsonStructiure {
   json: any;
 } 
 
+export function acceptation(x: string): Result<Acceptation, Err> {
+  if(!x.startsWith("/direct_message ")) return err({message: "Must start with '/direct_message '"});
+  const body = x.split(" ");
+  const id = body[1];
+  const type = body[2];
+  if(!id || !type || type !== "acceptation") return err({message: "Id and type required"});
+  return ok({ acceptationId: id });
+}
+
 export function test(x: string): Result<string, Err> {
   return { ok: true, value: x };
 }
@@ -43,18 +56,26 @@ export function parseDirectIdJSON(x: string): Result<JsonStructiure, Err> {
   const body = x.split(" ");
   const id = body[1];
   const type = body[2];
+  if(!type || !id) return err({message: "Type and json required"});
+  console.log(x)
+  // let json;
+  // try {
+  //   json = JSON.parse(body.slice(3).join(" "));
+  // }catch{
+  //   return err({message: "Can not parse JSON"});
+  // }
   const json = JSON.parse(body.slice(3).join(" "))
   if(!type || !json || !id) return err({message: "Type and json required"});
   return ok({type, id, json});
 }
 
-export function notifications(x: string): Result<JsonStructiure | NewMember | Send | Error, Err> {
+export function notifications(x: string): Result<Acceptation | NewMember | Send | Error, Err> {
   const resinvite = invite(x);
   if(resinvite.ok) return resinvite;
   const reserror = error(x);
   if(reserror.ok) return reserror;
-  // const resOffer = parseDirectIdJSON(x);
-  // if(resOffer.ok) return resOffer;
+  const resOffer = acceptation(x);
+  if(resOffer.ok) return resOffer;
   return send(x);
 }
 

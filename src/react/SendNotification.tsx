@@ -16,7 +16,7 @@ export default function SendNotification({
   sendMess,
 }: SendNotificationPrpos) {
   return (
-    <Card className="h-full">
+    <Card shadow="none" className="h-full">
       <CardBody className="flex flex-col p-3 bg-default-100">
         <div className="grow w-full flex">
           <div className="grow flex sm:flex-col items-center sm:items-start sm:gap-2 justify-between">
