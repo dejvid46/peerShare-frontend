@@ -1,6 +1,7 @@
 import { Button, Input } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import type { Room } from "../helpers/Parsers";
+import ShareModal from "./ShareModal";
 
 interface RoomInptProps {
   sendMess: (mess: string) => void;
@@ -10,14 +11,29 @@ interface RoomInptProps {
 
 export default function RoomInpt({ children, room, sendMess }: RoomInptProps) {
   const [roomInput, setRoomInput] = useState(room.id);
+  const queryParameters = new URLSearchParams(window.location.search);
+  const join_room = queryParameters.get("room");
+  const key = queryParameters.get("key");
+  if (join_room && key) {
+    sendMess(`/join ${join_room} ${key}`);
+    sendMess("/room");
+    sendMess("/members");
+    queryParameters.delete("room");
+    queryParameters.delete("key");
+    window.history.pushState(
+      {},
+      document.title,
+      "/" + queryParameters.toString()
+    );
+  }
 
   const invite = () => {
     room.id !== roomInput && roomInput && sendMess(`/invite ${roomInput}`);
-    setRoomInput((roomInput) => room.id);
+    setRoomInput((_) => room.id);
   };
 
   useEffect(() => {
-    setRoomInput((roomInput) => room.id);
+    setRoomInput((_) => room.id);
   }, [room]);
 
   return (
@@ -46,14 +62,7 @@ export default function RoomInpt({ children, room, sendMess }: RoomInptProps) {
           </Button>
         }
       />
-      <Button
-        color="primary"
-        variant="shadow"
-        className="min-w-5"
-        startContent={children}
-      >
-        Share
-      </Button>
+      <ShareModal>{children}</ShareModal>
     </div>
   );
 }

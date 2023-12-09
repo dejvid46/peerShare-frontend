@@ -5,7 +5,6 @@ import { NewMember, Send, notifications, room } from "../helpers/Parsers";
 import useWebSocket from "../helpers/UseWebSocket";
 import SendNotification from "./SendNotification";
 import ErrorNotification from "./ErrorNotification";
-import AcceptFileSharing from "./AcceptFileSharing";
 import type { Acceptation, Error } from "../helpers/Parsers";
 
 export default function NotificationContainer() {
@@ -61,15 +60,6 @@ export default function NotificationContainer() {
               <div key={key} className="mb-4 lg:row-[span_2] bg-transparent">
                 <ErrorNotification
                   item={notification as Error}
-                  remove={remove}
-                />
-              </div>
-            );
-          } else if (notification.acceptationId) {
-            return (
-              <div key={key} className="mb-4 lg:row-[span_2] bg-transparent">
-                <AcceptFileSharing
-                  item={notification as Acceptation}
                   remove={remove}
                 />
               </div>

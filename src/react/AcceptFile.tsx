@@ -1,6 +1,6 @@
 import React from "react";
 import Popover from "./Popover";
-import { Button } from "@nextui-org/react";
+import { Button, Card, CardBody } from "@nextui-org/react";
 import WebRTCContainer from "../helpers/WebRTCContainer";
 
 interface AcceptFilePrpos {
