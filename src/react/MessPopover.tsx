@@ -13,7 +13,7 @@ export default function MessPopover({ text }: MessPopoverPrpos) {
       setOpen(true);
       setTimeout(() => {
         setOpen(false);
-      }, 4000);
+      }, 3500);
     }
   }, [text]);
 

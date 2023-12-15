@@ -19,12 +19,28 @@ export default class DataChannel {
   private config(dc: RTCDataChannel) {
     console.log("new WebRTC", this.create ? "local" : "remote");
     dc.binaryType = "arraybuffer";
-    dc.addEventListener("message", (event) => {
-      console.log(event.data);
-    });
+    let receiveBuffer: any[] = [];
+    let receivedSize;
+    dc.addEventListener(
+      "message",
+      this.onReceiveMessageCallback(receiveBuffer, receivedSize)
+    );
     dc.addEventListener("open", (event) => {
       this.holder.forEach((x) => dc.send(x));
     });
+  }
+
+  private onReceiveMessageCallback(receiveBuffer: any[], receivedSize: any) {
+    return (e: any) => {
+      console.log(`Received Message ${e.data.byteLength}`);
+      receiveBuffer.push(e.data);
+      receivedSize += e.data.byteLength;
+
+      if (e.data === "Done!") {
+        const received = new Blob(receiveBuffer);
+        console.log(received);
+      }
+    };
   }
 
   public close() {
