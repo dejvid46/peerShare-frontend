@@ -1,6 +1,6 @@
 import { Button, Input } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
-import type { Room } from "../helpers/Parsers";
+import type { Room } from "../../helpers/Parsers";
 import ShareModal from "./ShareModal";
 
 interface RoomInptProps {

@@ -1,9 +1,9 @@
 import WebRTC from "./WebRTC";
-import Ws from "./WebSocket";
-import { JsonStructiure, parseDirectIdJSON } from "./Parsers";
-import { err, ok, type Result } from "./Result";
-import type { Err } from "./UseWebSocket";
-import { members as membersParser } from "./Parsers";
+import Ws from "../ws/WebSocket";
+import { JsonStructiure, parseDirectIdJSON } from "../Parsers";
+import { err, ok, type Result } from "../Result";
+import type { Err } from "../ws/UseWebSocket";
+import { members as membersParser } from "../Parsers";
 
 export default class WebRTCContainer {
 

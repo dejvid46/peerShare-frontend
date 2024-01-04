@@ -1,8 +1,8 @@
 import { Button, Card, CardBody } from "@nextui-org/react";
 import React from "react";
-import xSvg from "../icons/x.svg";
-import AvatarIcon from "./AvatarIcon";
-import type { NewMember } from "../helpers/Parsers";
+import xSvg from "../../icons/x.svg";
+import AvatarIcon from "../avatar/AvatarIcon";
+import type { NewMember } from "../../helpers/Parsers";
 
 interface InvitePrpos {
   item: NewMember;

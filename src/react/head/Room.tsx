@@ -1,6 +1,6 @@
 import React from "react";
-import useWebSocket from "../helpers/UseWebSocket";
-import { room } from "../helpers/Parsers";
+import useWebSocket from "../../helpers/ws/UseWebSocket";
+import { room } from "../../helpers/Parsers";
 import RoomInptut from "./RoomInput";
 
 interface RoomProps {

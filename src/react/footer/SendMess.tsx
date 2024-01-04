@@ -1,8 +1,8 @@
 import { Button, Input } from "@nextui-org/react";
 import React, { useState } from "react";
-import useWebSocket from "../helpers/UseWebSocket";
-import type { Message } from "../helpers/Parsers";
-import { id } from "../helpers/Parsers";
+import useWebSocket from "../../helpers/ws/UseWebSocket";
+import type { Message } from "../../helpers/Parsers";
+import { id } from "../../helpers/Parsers";
 
 interface SendMessProps {
   add?: (item: Message) => void;

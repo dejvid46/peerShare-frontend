@@ -1,7 +1,7 @@
 import React from "react";
 import AvatarPosition from "./AvatarPosition";
-import useWebSocket from "../helpers/UseWebSocket";
-import { members, id, message } from "../helpers/Parsers";
+import useWebSocket from "../../helpers/ws/UseWebSocket";
+import { members, id, message } from "../../helpers/Parsers";
 import MyAvatar from "./MyAvatar";
 
 export default function AvatarCircle() {

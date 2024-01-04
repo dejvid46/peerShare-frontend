@@ -1,5 +1,5 @@
 import type { Result } from "./Result";
-import type { Err } from "./UseWebSocket";
+import type { Err } from "./ws/UseWebSocket";
 import { ok, err } from "./Result";
 
 export interface NewMember{

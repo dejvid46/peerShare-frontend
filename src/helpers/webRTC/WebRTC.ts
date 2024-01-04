@@ -1,5 +1,5 @@
 import { sendDirectObj } from "./WebRTCContainer";
-import Ws from "./WebSocket";
+import Ws from "../ws/WebSocket";
 import DataChannel from "./DataChannel";
 
 export default class WebRTC {

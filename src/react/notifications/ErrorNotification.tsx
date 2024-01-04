@@ -1,8 +1,8 @@
 import { Button, Card, CardBody } from "@nextui-org/react";
 import React from "react";
-import xSvg from "../icons/x.svg";
-import warning from "../icons/warning.svg";
-import type { Error } from "../helpers/Parsers";
+import xSvg from "../../icons/x.svg";
+import warning from "../../icons/warning.svg";
+import type { Error } from "../../helpers/Parsers";
 
 interface ErrorPrpos {
   item: Error;

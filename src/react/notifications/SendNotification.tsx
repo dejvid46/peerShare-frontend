@@ -1,8 +1,8 @@
 import { Button, Card, CardBody } from "@nextui-org/react";
 import React from "react";
-import xSvg from "../icons/x.svg";
-import type { Send } from "../helpers/Parsers";
-import enter from "../icons/enter.svg";
+import xSvg from "../../icons/x.svg";
+import type { Send } from "../../helpers/Parsers";
+import enter from "../../icons/enter.svg";
 
 interface SendNotificationPrpos {
   item: Send;

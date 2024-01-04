@@ -1,10 +1,10 @@
 import { Button, Card, CardBody, Input } from "@nextui-org/react";
 import React, { useState } from "react";
 import SendMess from "./SendMess";
-import useWSCollector from "../helpers/UseWSCollector";
-import { id, message } from "../helpers/Parsers";
-import useWebSocket from "../helpers/UseWebSocket";
-import AvatarIcon from "./AvatarIcon";
+import useWSCollector from "../../helpers/ws/UseWSCollector";
+import { id, message } from "../../helpers/Parsers";
+import useWebSocket from "../../helpers/ws/UseWebSocket";
+import AvatarIcon from "../avatar/AvatarIcon";
 
 export default function ChatSendMess() {
   const { collector, add } = useWSCollector(message);

@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import Invite from "./Invite";
-import useWSCollector from "../helpers/UseWSCollector";
-import { NewMember, Send, notifications, room } from "../helpers/Parsers";
-import useWebSocket from "../helpers/UseWebSocket";
+import Invite from "./InviteNotification";
+import useWSCollector from "../../helpers/ws/UseWSCollector";
+import { NewMember, Send, notifications, room } from "../../helpers/Parsers";
+import useWebSocket from "../../helpers/ws/UseWebSocket";
 import SendNotification from "./SendNotification";
 import ErrorNotification from "./ErrorNotification";
-import type { Acceptation, Error } from "../helpers/Parsers";
+import type { Acceptation, Error } from "../../helpers/Parsers";
 
 export default function NotificationContainer() {
   const { lastMess, sendMess } = useWebSocket(room);

@@ -14,7 +14,7 @@ export default function AvatarIcon({ id, rotate, p, w, h }: AvatarProps) {
   const hash = Number.parseInt(id.slice(-3)) % 24;
 
   useEffect(() => {
-    const svg = import(`../icons/${hash}.svg`);
+    const svg = import(`../../icons/${hash}.svg`);
     svg.then((x) => setLoad(x.default));
   }, [id]);
 

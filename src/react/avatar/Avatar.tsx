@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import AvatarIcon from "./AvatarIcon";
-import MessPopover from "./MessPopover";
-import AcceptFile from "./AcceptFile";
+import MessPopover from "../popover/MessPopover";
+import AcceptFile from "../popover/AcceptFilePopover";
 
 interface AvatarProps {
   id: string;

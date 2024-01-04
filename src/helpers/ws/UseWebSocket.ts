@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Ws, { ReadyState } from "./WebSocket";
-import type { Result } from "./Result";
+import type { Result } from "../Result";
 
 export interface Err {
   message: string

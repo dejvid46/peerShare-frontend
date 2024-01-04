@@ -9,15 +9,15 @@ import {
 } from "@nextui-org/react";
 import React from "react";
 import QRCode from "react-qr-code";
-import useWebSocket from "../helpers/UseWebSocket";
-import { room } from "../helpers/Parsers";
+import useWebSocket from "../../helpers/ws/UseWebSocket";
+import { room } from "../../helpers/Parsers";
 import ShareLink from "./ShareLink";
-import gmail from "../icons/gmail.svg";
-import mail from "../icons/mail.svg";
-import twitter from "../icons/twitter.svg";
-import linkedin from "../icons/linkedin.svg";
-import whatsapp from "../icons/whatsapp.svg";
-import facebook from "../icons/facebook.svg";
+import gmail from "../../icons/gmail.svg";
+import mail from "../../icons/mail.svg";
+import twitter from "../../icons/twitter.svg";
+import linkedin from "../../icons/linkedin.svg";
+import whatsapp from "../../icons/whatsapp.svg";
+import facebook from "../../icons/facebook.svg";
 
 interface ShareModalPrpos {
   children: JSX.Element;

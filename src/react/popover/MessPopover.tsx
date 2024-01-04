@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Popover from "./Popover";
+import Popover from "../components/Popover";
 
 interface MessPopoverPrpos {
   text?: string;
