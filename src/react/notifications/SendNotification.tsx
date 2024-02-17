@@ -23,7 +23,7 @@ export default function SendNotification({
             <div className="flex items-center gap-3">
               <div className="w-8 h-8">
                 <img
-                  className="h-auto w-full "
+                  className="h-auto w-full"
                   src={enter}
                   alt="enter room icon"
                 />

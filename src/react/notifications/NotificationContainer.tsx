@@ -5,11 +5,20 @@ import { NewMember, Send, notifications, room } from "../../helpers/Parsers";
 import useWebSocket from "../../helpers/ws/UseWebSocket";
 import SendNotification from "./SendNotification";
 import ErrorNotification from "./ErrorNotification";
-import type { Acceptation, Error } from "../../helpers/Parsers";
+import type { Error, FileUUID } from "../../helpers/Parsers";
+import FileContainer, { MyFile } from "../../helpers/FileContainer";
+import FileNotification from "./FileNotification";
 
 export default function NotificationContainer() {
   const { lastMess, sendMess } = useWebSocket(room);
-  const { collector, remove, dropColector } = useWSCollector(notifications);
+  const { collector, remove, dropColector, setCollector } = useWSCollector(notifications);
+
+  useEffect(() => {
+    FileContainer.instance.onNewFile((uuid) => {
+      console.log("registering new file: ", uuid);
+      setCollector((c) => [...c, {uuid} as FileUUID])
+    });
+  }, []);
 
   /*
   cau davidku tady zuzanka lmaoooooo
@@ -26,7 +35,7 @@ export default function NotificationContainer() {
   return (
     <div
       dir="rtl"
-      className="lg:fixed bg-transparent lg:left-[5%] lg:max-w-[400px] lg:-translate-x-[5%] lg:-translate-y-2/4 lg:top-2/4 lg:max-h-[50%] lg:overflow-auto"
+      className="lg:fixed bg-transparent lg:left-[5%] lg:max-w-[400px] lg:-translate-x-[5%] lg:-translate-y-2/4 lg:top-2/4 lg:max-h-[50%]"
     >
       <div
         dir="ltr"
@@ -61,6 +70,16 @@ export default function NotificationContainer() {
                 <ErrorNotification
                   item={notification as Error}
                   remove={remove}
+                />
+              </div>
+            );
+          } else if (notification.uuid) {
+            return (
+              <div key={key} className="mb-4 lg:row-[span_2] bg-transparent">
+                <FileNotification
+                  item={notification as FileUUID}
+                  remove={remove}
+                  sendMess={sendMess}
                 />
               </div>
             );

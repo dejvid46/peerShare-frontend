@@ -27,7 +27,8 @@ export default function useWSCollector<T>(parse?: (body: string) => Result<T, Er
     collector, 
     add: (item: T) => add(item, setCollector), 
     dropColector: () => setCollector([]), 
-    sendMess: (mess: string) => {sendMess(mess, state)}, 
+    sendMess: (mess: string) => {sendMess(mess, state)},
+    setCollector,
     state, 
     remove: (item: T) => remove(item, collector, setCollector)
   };
@@ -42,8 +43,10 @@ function sendMess(message: string, state: ReadyState){
 }
 
 function remove<T>(item: T, collector: Array<T>, setCollector: React.Dispatch<React.SetStateAction<T[]>>) {
-  const index = collector.findIndex((x) => {
-    return x === item;
-  });
-  setCollector(collector => collector.filter((s,i)=>(i != index)));
+  const index = collector.indexOf(item);
+  if (index > -1) {
+    collector.splice(index, 1);
+    const newArray = [...collector];
+    setCollector(newArray);
+  }
 }

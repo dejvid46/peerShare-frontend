@@ -47,11 +47,6 @@ export default function ErrorNotification({ item, remove }: ErrorPrpos) {
             </Button>
           </div>
         </div>
-        {/* {progres && (
-          <div className="w-full mt-2 sm:mt-3">
-            <Progress size="sm" aria-label="Loading..." value={progres} />
-          </div>
-        )} */}
       </CardBody>
     </Card>
   );

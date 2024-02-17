@@ -11,14 +11,25 @@ export default class WebRTCContainer {
 
   constructor(
     private _WebRTCs: Map<string, WebRTC> = new Map(),
+    private _Listeners: Map<string, Array<() => void>> = new Map(),
+    public id_from: string | undefined = undefined
   ) {
     Ws.instance.add(parseDirectIdJSON, this.listener());
 
     Ws.instance.add(membersParser, (members) => {
       this._WebRTCs.forEach(webrtc => {
-        !members.ids.includes(webrtc.id) && this.delete(webrtc);
+        !members.ids.includes(webrtc.id_to) && this.delete(webrtc);
       });
     });
+  }
+
+  public registerListener(id: string, f: () => void){
+    const listeners = this._Listeners.get(id)
+    if (listeners) {
+      listeners.push(f);
+    }else{
+      this._Listeners.set(id, [f]);
+    }
   }
 
   private listener() {
@@ -42,7 +53,7 @@ export default class WebRTCContainer {
 
   public register(id: string, offer?: RTCSessionDescriptionInit): Result<WebRTC, Err> {
     if (this._WebRTCs.has(id)) return err({message: "already"});
-    const webRTC = new WebRTC(id, offer);
+    const webRTC = new WebRTC(id, this.id_from || "", offer);
     this._WebRTCs.set(id, webRTC);
     return ok(webRTC);
   }
@@ -57,7 +68,8 @@ export default class WebRTCContainer {
 
   public delete(webrtc: WebRTC){
     webrtc.disconnect();
-    this._WebRTCs.delete(webrtc.id);
+    this._Listeners.delete(webrtc.id_to);
+    this._WebRTCs.delete(webrtc.id_to);
   }
 }
 

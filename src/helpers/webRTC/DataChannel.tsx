@@ -1,11 +1,15 @@
+import { FileConfig } from "../File";
+import FileContainer from "../FileContainer";
+
 export default class DataChannel {
   constructor(
+    private id: string,
     private rtc: RTCPeerConnection,
     private create: boolean,
     private dc: RTCDataChannel | undefined = (create &&
       rtc.createDataChannel("sendDataChannel", { ordered: true })) ||
       undefined,
-    private holder: Array<string> = []
+    private holder: Array<(dc: RTCDataChannel) => void> = []
   ) {
     !this.create &&
       this.rtc.addEventListener("datachannel", (event) => {
@@ -17,38 +21,34 @@ export default class DataChannel {
   }
 
   private config(dc: RTCDataChannel) {
-    console.log("new WebRTC", this.create ? "local" : "remote");
     dc.binaryType = "arraybuffer";
-    let receiveBuffer: any[] = [];
-    let receivedSize;
-    dc.addEventListener(
-      "message",
-      this.onReceiveMessageCallback(receiveBuffer, receivedSize)
-    );
-    dc.addEventListener("open", (event) => {
-      this.holder.forEach((x) => dc.send(x));
+
+    var fleReceiver = FileConfig.Receiver({
+      onBegin: (file) => {
+        FileContainer.instance.registerFile(file.uuid, file.id_from, file.id_to, file.name, file.maxChunks, file.lastModifiedDate, file.size, file.type);
+      },
+      onEnd: (file) => {
+        FileContainer.instance.finishFile(file.uuid, file.file, file.url);
+      },
+      onProgress: (file) => {
+        FileContainer.instance.updateFile(file.uuid, file.currentPosition)
+      },
     });
-  }
-
-  private onReceiveMessageCallback(receiveBuffer: any[], receivedSize: any) {
-    return (e: any) => {
-      console.log(`Received Message ${e.data.byteLength}`);
-      receiveBuffer.push(e.data);
-      receivedSize += e.data.byteLength;
-
-      if (e.data === "Done!") {
-        const received = new Blob(receiveBuffer);
-        console.log(received);
-      }
+    dc.onmessage = function (data) {
+        fleReceiver.receive(data);
     };
+
+    dc.addEventListener("open", (event) => {
+      this.holder.forEach((x) => x(dc));
+    });
   }
 
   public close() {
     this.dc && this.dc.close();
   }
 
-  public send(mess: string) {
-    (this.dc && this.dc.readyState === "open" && this.dc.send(mess)) ||
-      this.holder.push(mess);
+  public send(f: (dc: RTCDataChannel) => void) {
+    (this.dc && this.dc.readyState === "open" && f(this.dc)) ||
+      this.holder.push(f);
   }
 }

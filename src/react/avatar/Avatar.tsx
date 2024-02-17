@@ -87,7 +87,8 @@ export default function Avatar({ rotate, translateX, id, text }: AvatarProps) {
               id={id}
               cancelFiles={() => setFiles(undefined)}
             />
-          )) || <MessPopover text={text} />}
+          ))}
+          <MessPopover text={text} />
         </div>
       </div>
       {/* <div

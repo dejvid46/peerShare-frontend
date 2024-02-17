@@ -1,10 +1,15 @@
 import type { Result } from "./Result";
 import type { Err } from "./ws/UseWebSocket";
 import { ok, err } from "./Result";
+import type { MyFile } from "./FileContainer";
 
 export interface NewMember{
   id: string;
   room: string;
+}
+
+export interface FileUUID{
+  uuid: string,
 }
 
 export interface Room {
@@ -57,7 +62,6 @@ export function parseDirectIdJSON(x: string): Result<JsonStructiure, Err> {
   const id = body[1];
   const type = body[2];
   if(!type || !id) return err({message: "Type and json required"});
-  console.log(x)
   // let json;
   // try {
   //   json = JSON.parse(body.slice(3).join(" "));
@@ -69,7 +73,7 @@ export function parseDirectIdJSON(x: string): Result<JsonStructiure, Err> {
   return ok({type, id, json});
 }
 
-export function notifications(x: string): Result<Acceptation | NewMember | Send | Error, Err> {
+export function notifications(x: string): Result<Acceptation | NewMember | Send | FileUUID | Error, Err> {
   const resinvite = invite(x);
   if(resinvite.ok) return resinvite;
   const reserror = error(x);
@@ -90,11 +94,10 @@ export function invite(x: string): Result<NewMember, Err> {
 }
 
 export function error(x: string): Result<Error, Err> {
-  if(!x.startsWith("!!! "))  return err({message: "Must start with '!!! '"});
+  if(!x.startsWith("!!!")) return err({message: "Must start with '!!! '"});
   const body = x.split(" ");
   const mess = body.slice(1).join(" ");
   if(!mess) return err({message: "Message required"});
-  
   return ok({error_message: mess});
 }
 
