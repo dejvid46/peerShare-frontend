@@ -79,7 +79,6 @@ export default function NotificationContainer() {
                 <FileNotification
                   item={notification as FileUUID}
                   remove={remove}
-                  sendMess={sendMess}
                 />
               </div>
             );

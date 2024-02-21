@@ -6,8 +6,13 @@ export default function useFile(uuid: string) {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
+    const file = FileContainer.instance.getFile(uuid);
+    if (file) {
+      setProgress(Math.floor(file.position/file.maxChunks*100));
+      setFile(file);
+    }
     FileContainer.instance.onFileChange(uuid, (file) => {
-      setProgress(Math.floor(file.position/file.maxChunks*100))
+      setProgress(Math.floor(file.position/file.maxChunks*100));
       setFile(file);
     });
   }, [uuid]);
