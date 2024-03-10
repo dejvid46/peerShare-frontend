@@ -6,14 +6,16 @@ import Radar from "../components/Radar.astro";
 import Footer from "../components/Footer.astro";
 import NotificationContainer from "../react/notifications/NotificationContainer";
 import ChatSendMess from "../react/footer/ChatSendMess";
+import FullQueue from "../react/popover/FullQueue";
 ---
 
-<Layout title="Welcome to Astro.">
+<Layout title="PeerShare">
   <main class="flex flex-col items-center justify-between h-full">
     <Radar size="250px" />
     <Title />
     <ChatSendMess client:only="react" />
     <Footer>
+      <FullQueue client:only="react" />
       <NotificationContainer client:only="react" />
       <div class="block lg:hidden mb-8">
         <SendMess client:only="react" />

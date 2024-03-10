@@ -1,5 +1,4 @@
 --- 
-import Radar from '../components/Radar.astro';
 import '../styles/global.css';
 interface Props {
 	title: string;
@@ -12,10 +11,12 @@ const { title } = Astro.props;
 <html lang="en" class="dark bg-gradient-to-bl from-zinc-900 via-slate-900 to-stone-900 overflow-hidden" style="color-scheme: dark;">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description">
+		<meta name="description" content="Page for peer-to-peer sharing files without registering.">
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel='canonical' href='... the page URL ...' />
 		<meta name="generator" content={Astro.generator} />
+		<meta name="theme-color" content="#006FEE">
 		<title>{title}</title>
 	</head>
 	<body class="relative container mx-auto max-w-7xl px-6 min-h-[calc(100vh)] flex-grow">

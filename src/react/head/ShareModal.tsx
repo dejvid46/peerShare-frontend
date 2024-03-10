@@ -7,7 +7,7 @@ import {
   Snippet,
   useDisclosure,
 } from "@nextui-org/react";
-import React from "react";
+import React, { useMemo } from "react";
 import QRCode from "react-qr-code";
 import useWebSocket from "../../helpers/ws/UseWebSocket";
 import { room } from "../../helpers/Parsers";
@@ -27,8 +27,9 @@ export default function ShareModal({ children }: ShareModalPrpos) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { lastMess } = useWebSocket(room);
 
-  const link = `${window.location.href}?room=${lastMess?.id}&key=${lastMess?.key}`;
-  const urlLink = encodeURIComponent(link);
+  const link = useMemo(() => lastMess && `${window.location.href}?room=${lastMess?.id}&key=${lastMess?.key}` || window.location.href, [lastMess])
+
+  const urlLink = useMemo(() => encodeURIComponent(link), [link]);
   const shareText = "Click this link for file sharing";
 
   return (

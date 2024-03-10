@@ -20,20 +20,14 @@ export default function Avatar({ rotate, translateX, id, text }: AvatarProps) {
   const inputFile = useRef<HTMLInputElement>(null);
   const drop = useRef<HTMLDivElement>(null);
 
-  const onUpload = (files: FileList) => {
-    setFiles((x) => [...files]);
+  const onUpload = (newfiles: FileList) => {
+    setFiles([...newfiles]);
   };
 
   useEffect(() => {
     if (!drop || !drop.current) return;
     drop.current.addEventListener("dragover", handleDragOver);
     drop.current.addEventListener("drop", handleDrop);
-
-    return () => {
-      if (!drop || !drop.current) return;
-      drop.current.removeEventListener("dragover", handleDragOver);
-      drop.current.removeEventListener("drop", handleDrop);
-    };
   }, []);
 
   const handleDrop = (e: DragEvent) => {
@@ -50,6 +44,7 @@ export default function Avatar({ rotate, translateX, id, text }: AvatarProps) {
     if (!event.target.files || !event.target.files.length) return;
     onUpload(event.target.files);
     event.target.value = "";
+    event.target.files = null;
   };
 
   return (
@@ -81,22 +76,14 @@ export default function Avatar({ rotate, translateX, id, text }: AvatarProps) {
             />
             <AvatarIcon id={id} rotate={0} />
           </div>
-          {(files && (
-            <AcceptFile
-              files={files}
-              id={id}
-              cancelFiles={() => setFiles(undefined)}
-            />
-          ))}
+          <AcceptFile
+            files={files}
+            id={id}
+            cancelFiles={() => setFiles(undefined)}
+          />
           <MessPopover text={text} />
         </div>
       </div>
-      {/* <div
-        style={{
-          transform: `rotate(${rotate}deg) translateX(${translateX}%) translateY(${0})`,
-        }}
-        className="absolute sm:h-16 sm:w-16 sm:left-[calc(50%_-_32px)] sm:top-[calc(50%_-_32px)] h-12 w-12 left-[calc(50%_-_24px)] top-[calc(50%_-_24px)] rounded-[50%]"
-      ></div> */}
     </>
   );
 }

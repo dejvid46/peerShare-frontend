@@ -38,8 +38,11 @@ export default function RoomInpt({ children, room, sendMess }: RoomInptProps) {
 
   return (
     <div className="flex flex-row items-center mx-2">
+      <label htmlFor="roomid" className="sr-only">Room id</label>
       <Input
         size="lg"
+        id="roomid"
+        aria-label="roomid"
         type="number"
         className="mr-4"
         onKeyDown={(e) => {

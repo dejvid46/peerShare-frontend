@@ -18,7 +18,8 @@ export default class Ws {
   static instance = new Ws();
 
   constructor(
-    private _ws = new WebSocket(`ws://127.0.0.1:8080/ws`),
+    //private _ws = new WebSocket(`ws://${location.host}/ws`),
+    private _ws = new WebSocket(`ws://192.168.88.254:80/ws`),
     public state = ReadyState.CONNECTING,
     private _listener: Array<(state: ReadyState) => void> = new Array(),
     private _parserCache: Map<(body: string) => Result<any, Err>, Cache<any>> = new Map(),
@@ -28,8 +29,10 @@ export default class Ws {
       this._listener.forEach(x => x(this.state));
     };
     this._ws.onclose = () => {
-      this.state = ReadyState.CLOSE;
-      this._listener.forEach(x => x(this.state));
+      if (this.state != -1) {
+        this.state = ReadyState.CLOSE;
+        this._listener.forEach(x => x(this.state)); 
+      }
     };
     this._ws.onerror = () => {
       this.state = ReadyState.UNINSTANTIATED;
@@ -63,15 +66,15 @@ export default class Ws {
     return this._parserCache.get(parser)?.cache;
   }
 
-  // public add(fn: (event: MessageEvent<any>) => void) {
-  //   this._ws.addEventListener("message", fn);
-  // }
-
   public addStateListener(listener: (state: ReadyState) => void) {
     this._listener.push(listener);
   }
 
   public sendMessage(body: string) {
     this._ws.send(body);
+  }
+
+  public getState() {
+    return this.state;
   }
 }

@@ -28,8 +28,11 @@ export default function SendMess({ add }: SendMessProps) {
 
   return (
     <div className="flex flex-row items-center">
+      <label htmlFor="message" className="sr-only">Message</label>
       <Input
         size="lg"
+        name="message"
+        aria-label="message"
         value={mess}
         onKeyDown={handleKeyDown}
         onChange={(e) => setMess(e.target.value)}

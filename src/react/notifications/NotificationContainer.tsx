@@ -15,7 +15,6 @@ export default function NotificationContainer() {
 
   useEffect(() => {
     FileContainer.instance.onNewFile((uuid) => {
-      console.log("registering new file: ", uuid);
       setCollector((c) => [...c, {uuid} as FileUUID])
     });
   }, []);

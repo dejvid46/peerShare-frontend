@@ -10,7 +10,6 @@ interface RoomProps {
 export default function Room({ children }: RoomProps) {
   const { lastMess, sendMess } = useWebSocket(room, "/room");
   if (!lastMess) return <></>;
-  console.log(lastMess);
 
   return (
     <RoomInptut room={lastMess} sendMess={sendMess}>
