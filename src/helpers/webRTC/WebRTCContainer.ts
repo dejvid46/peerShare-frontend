@@ -42,6 +42,7 @@ export default class WebRTCContainer {
       if(!webrtc) return;
       if (res.type === "icecandidate") {
         if (!res.json) return;
+        console.log("adding addIceCandidate:", res.json);
         webrtc.rtc.addIceCandidate(res.json);
       }
       if (res.type === "answer") {
