@@ -8,10 +8,11 @@ export default class WebRTC {
     public id_to: string,
     public id_from: string,
     private offer?: RTCSessionDescriptionInit | undefined,
-    public rtc: RTCPeerConnection = new RTCPeerConnection(),
+    public rtc: RTCPeerConnection = new RTCPeerConnection({ 'iceServers': [{ 'urls': 'stun:stun1.l.google.com:19302' }] }),
     private dc: DataChannel = new DataChannel(id_to, rtc, offer ? false : true),
   ) {
     this.rtc.addEventListener("icecandidate", async event => {
+      console.log("sending IceCandidate", event.candidate);
       Ws.instance.sendMessage(sendDirectObj("icecandidate", this.id_to, event.candidate));
     });
 
