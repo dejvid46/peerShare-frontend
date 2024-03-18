@@ -3,12 +3,21 @@ import Ws from "../ws/WebSocket";
 import DataChannel from "./DataChannel";
 import { FileConfig } from "../File";
 
+const RTC_CONFIG: RTCConfiguration = {
+  iceServers:[
+      {
+        urls: [ "stun:stun1.l.google.com:19302", "stun:stun2.l.google.com:19302"]
+      }
+  ],
+  iceCandidatePoolSize: 10,
+};
+
 export default class WebRTC {
   constructor(
     public id_to: string,
     public id_from: string,
     private offer?: RTCSessionDescriptionInit | undefined,
-    public rtc: RTCPeerConnection = new RTCPeerConnection({ 'iceServers': [{ 'urls': 'stun:stun1.l.google.com:19302' }] }),
+    public rtc: RTCPeerConnection = new RTCPeerConnection(RTC_CONFIG),
     private dc: DataChannel = new DataChannel(id_to, rtc, offer ? false : true),
   ) {
     this.rtc.addEventListener("icecandidate", async event => {
