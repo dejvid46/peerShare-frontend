@@ -1,14 +1,19 @@
 import type { Result } from "./Result";
 import type { Err } from "./ws/UseWebSocket";
 import { ok, err } from "./Result";
+import { ReCaptchaInstance } from "recaptcha-v3";
 
 export interface NewMember{
   id: string;
   room: string;
 }
 
-export interface FileUUID{
+export interface FileUUID {
   uuid: string,
+}
+
+export interface ReCaptcha {
+  reCaptcha: "reCaptcha"
 }
 
 export interface Room {
@@ -72,7 +77,7 @@ export function parseDirectIdJSON(x: string): Result<JsonStructiure, Err> {
   return ok({type, id, json});
 }
 
-export function notifications(x: string): Result<Acceptation | NewMember | Send | FileUUID | Error, Err> {
+export function notifications(x: string): Result<Acceptation | NewMember | Send | FileUUID | ReCaptcha | Error, Err> {
   const resinvite = invite(x);
   if(resinvite.ok) return resinvite;
   const reserror = error(x);

@@ -4,6 +4,7 @@ import { JsonStructiure, parseDirectIdJSON } from "../Parsers";
 import { err, ok, type Result } from "../Result";
 import type { Err } from "../ws/UseWebSocket";
 import { members as membersParser } from "../Parsers";
+import { load } from 'recaptcha-v3';
 
 export default class WebRTCContainer {
 
@@ -12,7 +13,8 @@ export default class WebRTCContainer {
   constructor(
     private _WebRTCs: Map<string, WebRTC> = new Map(),
     private _Listeners: Map<string, Array<() => void>> = new Map(),
-    public id_from: string | undefined = undefined
+    public id_from: string | undefined = undefined,
+    private _recaptchaContainer: Array<() => void> = []
   ) {
     Ws.instance.add(parseDirectIdJSON, this.listener());
 
@@ -52,8 +54,13 @@ export default class WebRTCContainer {
     }
   }
 
-  public register(id: string, offer?: RTCSessionDescriptionInit): Result<WebRTC, Err> {
+  public async register(id: string, offer?: RTCSessionDescriptionInit): Promise<Result<WebRTC, Err>> {
     if (this._WebRTCs.has(id)) return err({message: "already"});
+
+    const recaptcha = await load(import.meta.env.PUBLIC_SW);
+    const token = await recaptcha.execute();
+    console.log(token);
+
     const webRTC = new WebRTC(id, this.id_from || "", offer);
     this._WebRTCs.set(id, webRTC);
     return ok(webRTC);
@@ -71,6 +78,10 @@ export default class WebRTCContainer {
     webrtc.disconnect();
     this._Listeners.delete(webrtc.id_to);
     this._WebRTCs.delete(webrtc.id_to);
+  }
+
+  public addRecaptchaRegister(f: () => void) {
+    this._recaptchaContainer.push(f);
   }
 }
 

@@ -23,19 +23,28 @@ export default class DataChannel {
   private config(dc: RTCDataChannel) {
     dc.binaryType = "arraybuffer";
 
-    var fleReceiver = FileConfig.Receiver({
+    let fleReceiver = FileConfig.Receiver({
       onBegin: (file) => {
-        FileContainer.instance.registerFile(file.uuid, file.id_from, file.id_to, file.name, file.maxChunks, file.lastModifiedDate, file.size, file.type);
+        FileContainer.instance.registerFile(
+          file.uuid,
+          file.id_from,
+          file.id_to,
+          file.name,
+          file.maxChunks,
+          file.lastModifiedDate,
+          file.size,
+          file.type
+        );
       },
       onEnd: (file) => {
         FileContainer.instance.finishFile(file.uuid, file.file, file.url);
       },
       onProgress: (file) => {
-        FileContainer.instance.updateFile(file.uuid, file.currentPosition)
+        FileContainer.instance.updateFile(file.uuid, file.currentPosition);
       },
     });
     dc.onmessage = function (data) {
-        fleReceiver.receive(data);
+      fleReceiver.receive(data);
     };
 
     dc.addEventListener("open", (event) => {

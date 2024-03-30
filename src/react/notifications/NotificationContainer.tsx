@@ -5,17 +5,26 @@ import { NewMember, Send, notifications, room } from "../../helpers/Parsers";
 import useWebSocket from "../../helpers/ws/UseWebSocket";
 import SendNotification from "./SendNotification";
 import ErrorNotification from "./ErrorNotification";
-import type { Error, FileUUID } from "../../helpers/Parsers";
+import type { Error, FileUUID, ReCaptcha } from "../../helpers/Parsers";
 import FileContainer, { MyFile } from "../../helpers/FileContainer";
 import FileNotification from "./FileNotification";
+import WebRTCContainer from "../../helpers/webRTC/WebRTCContainer";
+import ReCaptchaNotification from "./ReCaptchaNotification";
 
 export default function NotificationContainer() {
   const { lastMess, sendMess } = useWebSocket(room);
-  const { collector, remove, dropColector, setCollector } = useWSCollector(notifications);
+  const { collector, remove, dropColector, setCollector } =
+    useWSCollector(notifications);
 
   useEffect(() => {
     FileContainer.instance.onNewFile((uuid) => {
-      setCollector((c) => [...c, {uuid} as FileUUID])
+      setCollector((c) => [...c, { uuid } as FileUUID]);
+    });
+  }, []);
+
+  useEffect(() => {
+    WebRTCContainer.instance.addRecaptchaRegister(() => {
+      setCollector((c) => [...c, { reCaptcha: "reCaptcha" } as ReCaptcha]);
     });
   }, []);
 
@@ -77,6 +86,15 @@ export default function NotificationContainer() {
               <div key={key} className="mb-4 lg:row-[span_2] bg-transparent">
                 <FileNotification
                   item={notification as FileUUID}
+                  remove={remove}
+                />
+              </div>
+            );
+          } else if (notification.reCaptcha) {
+            return (
+              <div key={key} className="mb-4 lg:row-[span_2] bg-transparent">
+                <ReCaptchaNotification
+                  item={notification as ReCaptcha}
                   remove={remove}
                 />
               </div>

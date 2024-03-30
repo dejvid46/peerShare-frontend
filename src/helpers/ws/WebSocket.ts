@@ -18,8 +18,7 @@ export default class Ws {
   static instance = new Ws();
 
   constructor(
-    //private _ws = new WebSocket(`wss://${location.host}/ws`),
-    private _ws = new WebSocket(`wss://peer-share.net/ws`),
+    private _ws = new WebSocket(import.meta.env.PUBLIC_SW),
     public state = ReadyState.CONNECTING,
     private _listener: Array<(state: ReadyState) => void> = new Array(),
     private _parserCache: Map<(body: string) => Result<any, Err>, Cache<any>> = new Map(),

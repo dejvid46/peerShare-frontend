@@ -1,35 +1,42 @@
---- 
-import '../styles/global.css';
+---
+import "../styles/global.css";
 interface Props {
-	title: string;
+  title: string;
 }
 
 const { title } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="en" class="dark bg-gradient-to-bl from-zinc-900 via-slate-900 to-stone-900 overflow-hidden" style="color-scheme: dark;">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Page for peer-to-peer sharing files without registering.">
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel='canonical' href='peer-share.net' />
-		<meta name="generator" content={Astro.generator} />
-		<meta name="theme-color" content="#006FEE">
-		<title>{title}</title>
-	</head>
-	<body class="relative container mx-auto max-w-7xl px-6 min-h-[calc(100vh)] flex-grow">
-		<slot />
-	</body>
+<html
+  lang="en"
+  class="dark bg-gradient-to-bl from-zinc-900 via-slate-900 to-stone-900 overflow-hidden"
+  style="color-scheme: dark;"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="Page for peer-to-peer sharing files. The sharing is completely free and end-to-end encrypted, so your file transfer is secured. It is done with WebRTC which operates on a peer-to-peer connection, so your files don't have to be uploaded to a server."
+    />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href="peer-share.net" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#006FEE" />
+    <title>{title}</title>
+  </head>
+  <body
+    class="relative container mx-auto max-w-7xl px-6 min-h-[calc(100vh)] flex-grow"
+  >
+    <slot />
+  </body>
 </html>
 
 <style is:global>
-	input[type=number]::-webkit-inner-spin-button, 
-	input[type=number]::-webkit-outer-spin-button { 
-		-webkit-appearance: none; 
-		margin: 0; 
-	}
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 </style>
-
-
