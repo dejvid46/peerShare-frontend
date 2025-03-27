@@ -1,54 +1,69 @@
-# Astro Starter Kit: Basics
+# PeerShare Frontend
 
+## Overview
+PeerShare is a web-based file-sharing platform that utilizes WebSockets and WebRTC for peer-to-peer file transfers. This repository contains the frontend of the application, built with Astro, React, and TailwindCSS.
+
+## Features
+- **Astro Framework**: Utilizes Astro for optimized performance and flexibility.
+- **React Components**: Dynamic UI elements powered by React.
+- **Framer Motion**: Provides smooth animations.
+- **TailwindCSS**: Modern utility-first CSS framework for styling.
+- **WebSockets**: Enables real-time communication.
+- **Google reCAPTCHA v3**: Enhances security against spam.
+
+## Installation
+
+### Prerequisites
+Make sure you have the following installed:
+- [Node.js](https://nodejs.org/) (v16 or later)
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
+
+### Clone the Repository
+```sh
+git clone https://github.com/your-repo/peershare-frontend.git
+cd peershare-frontend
 ```
-npm create astro@latest -- --template basics
+
+### Install Dependencies
+Using npm:
+```sh
+npm install
+```
+Using yarn:
+```sh
+yarn install
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+## Usage
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
+### Development Server
+Start the development server:
+```sh
+npm run dev
 ```
-/
-├── public/
-│   └── favicon.svg
+This will launch the frontend at `http://localhost:3000` by default.
+
+### Build for Production
+To create an optimized production build:
+```sh
+npm run build
+```
+
+### Preview Production Build
+```sh
+npm run preview
+```
+
+## Project Structure
+```
+peershare-frontend/
 ├── src/
-│   ├── components/
-│   │   └── Card.astro
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
+│   ├── components/        # Astro & React components
+│   ├── layouts/           # Page layouts
+│   ├── react/             # React components (client-side only)
+│   ├── pages/             # Astro pages
+│   └── styles/            # Global styles
+├── public/                # Static assets
+├── package.json           # Project dependencies & scripts
+└── astro.config.mjs       # Astro configuration
 ```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:3000`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
